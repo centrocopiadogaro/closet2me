@@ -270,9 +270,10 @@ input[type=range]{flex:1;accent-color:var(--p);height:4px;cursor:pointer}
   <div class="tabs">
     <div class="tab av o" id="ot0"><span class="tn">1</span>Perfil</div>
     <div class="tab pend" id="ot1"><span class="tn">2</span>Prenda</div>
-    <div class="tab pend" id="ot2"><span class="tn">3</span>Términos</div>
-    <div class="tab pend" id="ot3"><span class="tn">4</span>CLABE</div>
-    <div class="tab pend" id="ot4"><span class="tn">5</span>Firma</div>
+    <div class="tab pend" id="ot2"><span class="tn">3</span>Fotos</div>
+    <div class="tab pend" id="ot3"><span class="tn">4</span>Términos</div>
+    <div class="tab pend" id="ot4"><span class="tn">5</span>CLABE</div>
+    <div class="tab pend" id="ot5"><span class="tn">6</span>Firma</div>
   </div>
 
   <div class="pg on" id="op0">
@@ -317,6 +318,24 @@ input[type=range]{flex:1;accent-color:var(--p);height:4px;cursor:pointer}
   </div>
 
   <div class="pg" id="op2">
+    <h2 class="sh">Fotografías de tu prenda</h2><p class="sd">4 imágenes: 2 del producto solo + 2 de cómo lo usarías.</p>
+    <div class="card">
+      <div class="ch"><div class="ci p"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 0 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div><div><div class="ct">Sin usar — producto</div><div class="cs">Extendida, colgada o doblada</div></div></div>
+      <div class="prow">
+        <div class="pz" id="oz0" onclick="oTr(0)"><input type="file" id="ou0" accept="image/*" onchange="oPh(0,this)"><div class="pph" id="oph0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><p>Foto 1</p><small>Frente completo</small></div><img class="ppv" id="opv0"><button class="pchg" id="opc0" onclick="oCp(event,0)">Cambiar</button><div class="pck" id="opk0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg></div></div>
+        <div class="pz" id="oz1" onclick="oTr(1)"><input type="file" id="ou1" accept="image/*" onchange="oPh(1,this)"><div class="pph" id="oph1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><p>Foto 2</p><small>Detalle / etiqueta</small></div><img class="ppv" id="opv1"><button class="pchg" id="opc1" onclick="oCp(event,1)">Cambiar</button><div class="pck" id="opk1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg></div></div>
+      </div>
+      <div class="ch" style="margin-top:4px;border-top:1px solid var(--bd);padding-top:.85rem;border-bottom:none;margin-bottom:0;padding-bottom:0"><div class="ci g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div class="ct">Styling — cómo lo usarías</div><div class="cs">En outfit completo</div></div></div>
+      <div class="prow" style="margin-top:12px">
+        <div class="pz" id="oz2" onclick="oTr(2)"><input type="file" id="ou2" accept="image/*" onchange="oPh(2,this)"><div class="pph" id="oph2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><p>Foto 3</p><small>Outfit completo</small></div><img class="ppv" id="opv2"><button class="pchg" id="opc2" onclick="oCp(event,2)">Cambiar</button><div class="pck" id="opk2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg></div></div>
+        <div class="pz" id="oz3" onclick="oTr(3)"><input type="file" id="ou3" accept="image/*" onchange="oPh(3,this)"><div class="pph" id="oph3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><p>Foto 4</p><small>Perspectiva diferente</small></div><img class="ppv" id="opv3"><button class="pchg" id="opc3" onclick="oCp(event,3)">Cambiar</button><div class="pck" id="opk3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg></div></div>
+      </div>
+      <div class="tbdg" id="obdg" style="margin-top:9px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span id="obdgtxt">Sube las 4 fotos para continuar (0/4)</span></div>
+    </div>
+    <div class="nav"><button class="btn" onclick="oGo(1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Atrás</button><button class="btn btnp" id="obn2" onclick="oGo(3)" disabled>Continuar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button></div>
+  </div>
+
+  <div class="pg" id="op3">
     <h2 class="sh">Términos y condiciones</h2><p class="sd">Lee hasta el final para habilitar la aceptación.</p>
     <div class="card">
       <div class="twrap"><div class="tbox" id="otbox" onscroll="oChkS()">
@@ -335,10 +354,10 @@ input[type=range]{flex:1;accent-color:var(--p);height:4px;cursor:pointer}
       <div class="cki"><input type="checkbox" id="ock1" onchange="oEvCk()"><div><div class="ckt"><strong>Acepto los términos y condiciones</strong> incluyendo la tasa de servicio, período de 3 días ampliable, política de daños y responsabilidad entre partes.</div><div class="cks">La tasa cubre limpieza, recepción y logística. closet2me es intermediario tecnológico.</div></div></div>
       <div class="cki"><input type="checkbox" id="ock2" onchange="oEvCk()"><div><div class="ckt"><strong>Autorizo el uso de mi imagen y fotografías</strong> para publicidad y marketing de closet2me sin compensación adicional.</div></div></div>
     </div>
-    <div class="nav"><button class="btn" onclick="oGo(1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Atrás</button><button class="btn btnp" id="obn2" onclick="oGo(3)" disabled>Continuar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button></div>
+    <div class="nav"><button class="btn" onclick="oGo(2)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Atrás</button><button class="btn btnp" id="obn3" onclick="oGo(4)" disabled>Continuar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button></div>
   </div>
 
-  <div class="pg" id="op3">
+  <div class="pg" id="op4">
     <h2 class="sh">Cuenta bancaria</h2><p class="sd">Aquí recibirás tus ganancias vía SPEI.</p>
     <div class="mn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><div>Vista previa. En producción activa Stripe Connect con <code>pk_test_TU_CLAVE</code>.</div></div>
     <div class="card">
@@ -354,10 +373,10 @@ input[type=range]{flex:1;accent-color:var(--p);height:4px;cursor:pointer}
       <div class="clok" id="oclok"><div class="bch" id="ochip">BBVA</div><div class="clinfo"><div class="ct2">CLABE verificada</div><div class="cs2" id="ocmsk">—</div></div><button class="btns" onclick="oChCL()" style="margin-left:auto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/></svg>Cambiar</button></div>
       <div class="sbdgs"><span class="sbdg">🔒 PCI DSS</span><span class="sbdg">🔐 TLS 256-bit</span><span class="sbdg">Stripe Connect · SPEI</span></div>
     </div>
-    <div class="nav"><button class="btn" onclick="oGo(2)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Atrás</button><button class="btn btnp" id="obn3" onclick="oGo(4)" disabled>Continuar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button></div>
+    <div class="nav"><button class="btn" onclick="oGo(3)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Atrás</button><button class="btn btnp" id="obn4" onclick="oGo(5)" disabled>Continuar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button></div>
   </div>
 
-  <div class="pg" id="op4">
+  <div class="pg" id="op5">
     <h2 class="sh">Firma y confirma</h2><p class="sd">Revisa el resumen y firma para completar tu registro.</p>
     <div class="card">
       <div class="ch"><div class="ci p"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><div><div class="ct">Resumen de registro</div><div class="cs">Verifica antes de firmar</div></div></div>
@@ -376,11 +395,11 @@ input[type=range]{flex:1;accent-color:var(--p);height:4px;cursor:pointer}
       <div class="sigh"><span id="osigh">Firma en el recuadro de arriba</span><button class="btns" onclick="oClrS()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>Limpiar</button></div>
     </div>
     <div class="card"><div class="cki" style="padding:0;border:none"><input type="checkbox" id="ofck" onchange="oEvF()" style="width:16px;height:16px;accent-color:var(--p);flex-shrink:0;margin-top:2px;cursor:pointer"><div><div class="ckt" style="font-weight:500">Confirmo que todos los datos son correctos y que esta firma digital tiene la misma validez que una firma autógrafa conforme a la LFEA y el Código de Comercio de México.</div></div></div></div>
-    <div class="nav"><button class="btn" onclick="oGo(3)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Atrás</button><button class="btn btnp" id="obn4" onclick="oFin()">Registrar prenda <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></button></div>
+    <div class="nav"><button class="btn" onclick="oGo(4)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Atrás</button><button class="btn btnp" id="obn5" onclick="oFin()">Registrar prenda</button></div>
     <p class="saving" id="osaving"></p>
   </div>
 
-  <div class="pg" id="op5">
+  <div class="pg" id="op6">
     <div class="card"><div class="sucw"><div class="sring o"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><h2 class="stit">¡Tu prenda está lista!</h2><p class="ssub">Registro completado con firma digital y hash SHA-256. La revisaremos y publicaremos en 24–48 horas.</p></div><div class="cmeta"><div class="sr"><span class="sl">ID de registro</span><span class="sv mono" id="ocid">—</span></div><div class="sr"><span class="sl">Propietario</span><span class="sv" id="ocname">—</span></div><div class="sr" style="border:none"><span class="sl">Ganancia estimada</span><span class="sv" id="ocearn">—</span></div></div><p style="font-size:11.5px;color:var(--g);text-align:center;margin-top:1rem;font-weight:500">🎉 ¡Bienvenido a closet2me!</p></div>
   </div>
 </div>
@@ -524,14 +543,14 @@ async function sbInsert(table,data){
 }
 
 /* ── CONSTANTS ── */
-const OSTEPS=['Paso 1 de 5 — Perfil','Paso 2 de 5 — Prenda','Paso 3 de 5 — Términos','Paso 4 de 5 — CLABE','Paso 5 de 5 — Firma'];
+const OSTEPS=['Paso 1 de 6 — Perfil','Paso 2 de 6 — Prenda','Paso 3 de 6 — Fotos','Paso 4 de 6 — Términos','Paso 5 de 6 — CLABE','Paso 6 de 6 — Firma'];
 const RSTEPS=['Paso 1 de 5 — Identidad','Paso 2 de 5 — Términos','Paso 3 de 5 — Pago','Paso 4 de 5 — Firma','Paso 5 de 5 — Confirmar'];
-const PCTS=['20%','40%','60%','80%','100%'];
+const PCTS=['17%','33%','50%','67%','83%','100%'];
 const CATS={v:{n:'Vestido',e:'👗',min:500,max:1600,mE:274},c:{n:'Chamarra',e:'🧥',min:700,max:1400,mE:239},j:{n:'Jeans/Faldas',e:'👖',min:300,max:1150,mE:197},a:{n:'Accesorios',e:'👜',min:280,max:1400,mE:239},b:{n:'Blusas',e:'👕',min:250,max:950,mE:162}};
 const BANKS={'002':'BBVA México','006':'Bancomext','021':'HSBC México','036':'Inbursa','044':'Scotiabank','058':'Banregio','072':'Banorte','127':'Banco Azteca','137':'BanCoppel','143':'CIBanco','646':'STP','706':'Arcus','723':'Cuenca','732':'Mercado Pago'};
 
 /* ── STATE ── */
-let oCur=0,oSC=null,oIV=0,oClV='',oTs='',oHash='',oCD={},oSCtx=null,oStr=0,oDrw=false,oTR=false;
+let oCur=0,oSC=null,oIV=0,oClV='',oTs='',oHash='',oCD={},oSCtx=null,oStr=0,oDrw=false,oTR=false,oPhotos=[null,null,null,null];
 let rCur=0,rTR=false,rTs='',rHash='',rCD={},rPI=null,rL4=null,rBr=null,rSCtx=null,rStr=0,rDrw=false;
 
 async function sha256(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');}
@@ -553,12 +572,47 @@ function backLand(){
 /* ── OWNER NAV ── */
 function oGo(n){
   document.getElementById('op'+oCur).classList.remove('on');
-  if(oCur<5){const t=document.getElementById('ot'+oCur);t.classList.remove('av','o');if(n>oCur)t.classList.add('done');else t.classList.remove('done');}
+  if(oCur<6){const t=document.getElementById('ot'+oCur);t.classList.remove('av','o');if(n>oCur)t.classList.add('done');else t.classList.remove('done');}
   oCur=n;
   document.getElementById('op'+n).classList.add('on');
-  if(n<5){const t=document.getElementById('ot'+n);t.classList.remove('pend','done');t.classList.add('av','o');document.getElementById('oplbl').textContent=OSTEPS[n];document.getElementById('oppct').textContent=PCTS[n];document.getElementById('opf').style.width=PCTS[n];}
-  if(n===4){oInitSig();}
+  if(n<6){const t=document.getElementById('ot'+n);t.classList.remove('pend','done');t.classList.add('av','o');document.getElementById('oplbl').textContent=OSTEPS[n];document.getElementById('oppct').textContent=PCTS[n];document.getElementById('opf').style.width=PCTS[n];}
+  if(n===5){oInitSig();}
   window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ── OWNER PHOTOS ── */
+function oTr(i){document.getElementById('ou'+i).click();}
+function oPh(i,inp){
+  const f=inp.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=function(e){
+    oPhotos[i]=e.target.result;
+    document.getElementById('oph'+i).style.display='none';
+    const pv=document.getElementById('opv'+i);pv.src=e.target.result;pv.style.display='block';
+    document.getElementById('opc'+i).style.display='block';
+    document.getElementById('opk'+i).style.display='flex';
+    document.getElementById('oz'+i).classList.add('ok');
+    oChkPh();
+  };
+  r.readAsDataURL(f);
+}
+function oCp(e,i){
+  e.stopPropagation();
+  oPhotos[i]=null;
+  document.getElementById('opv'+i).style.display='none';
+  document.getElementById('opc'+i).style.display='none';
+  document.getElementById('opk'+i).style.display='none';
+  document.getElementById('oph'+i).style.display='flex';
+  document.getElementById('oz'+i).classList.remove('ok');
+  document.getElementById('ou'+i).value='';
+  oChkPh();
+}
+function oChkPh(){
+  const cnt=oPhotos.filter(function(p){return p;}).length;
+  const ok=cnt===4;
+  document.getElementById('obdg').classList.toggle('ok',ok);
+  document.getElementById('obdgtxt').textContent=ok?'¡Las 4 fotos están listas!':'Sube las 4 fotos para continuar ('+cnt+'/4)';
+  document.getElementById('obn2').disabled=!ok;
 }
 
 /* ── OWNER CATEGORY ── */
@@ -598,7 +652,7 @@ function oChkS(){
   }
 }
 function oEvCk(){
-  document.getElementById('obn2').disabled=!(document.getElementById('ock1').checked&&document.getElementById('ock2').checked);
+  document.getElementById('obn3').disabled=!(document.getElementById('ock1').checked&&document.getElementById('ock2').checked);
 }
 
 /* ── OWNER CLABE ── */
@@ -684,7 +738,7 @@ function oFin(){
   document.getElementById('ocid').textContent=id;
   document.getElementById('ocname').textContent=oCD.name;
   document.getElementById('ocearn').textContent='$'+oCD.earn.toLocaleString()+' MXN';
-  oGo(5);
+  oGo(6);
   document.getElementById('oplbl').textContent='¡Prenda registrada!';
   document.getElementById('oppct').textContent='100%';
   document.getElementById('opf').style.width='100%';
