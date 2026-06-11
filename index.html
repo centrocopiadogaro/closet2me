@@ -1,918 +1,1002 @@
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>closet2me</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600&family=DM+Mono&display=swap" rel="stylesheet">
-<style>
-:root{
-  --p:#2D1B6B;--pm:#4A2D9C;--pp:#EDE8F8;--ac:#C8A95A;
-  --g:#2D7A5A;--gl:#E6F4EE;
-  --ink:#1A1625;--im:#4A4560;--il:#8C87A0;
-  --sf:#FAFAF8;--s2:#F2F0F7;--w:#fff;
-  --bd:rgba(45,27,107,.12);--bs:rgba(45,27,107,.22);
-}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'DM Sans',sans-serif;background:var(--sf);color:var(--ink);min-height:100vh}
-.hdr{position:sticky;top:0;z-index:99;background:rgba(250,250,248,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--bd);height:52px;padding:0 1.25rem;display:flex;align-items:center;justify-content:space-between}
-.logo{font-family:'DM Serif Display',serif;font-size:20px;color:var(--p);letter-spacing:-.5px}
-.hbg{font-size:11px;padding:4px 11px;border-radius:20px;font-weight:500;transition:all .3s}
-.hbg.n{background:var(--s2);color:var(--il)}
-.hbg.o{background:var(--pp);color:var(--pm)}
-.hbg.r{background:var(--gl);color:var(--g)}
-.wrap{max-width:600px;margin:0 auto;padding:1.5rem 1rem 3rem}
-.sc{display:none}.sc.on{display:block}
-.pg{display:none}.pg.on{display:block;animation:up .25s ease}
-@keyframes up{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
-
-/* LANDING */
-.hero{text-align:center;padding:2rem 0 1.5rem}
-.hero h1{font-family:'DM Serif Display',serif;font-size:48px;color:var(--p);letter-spacing:-2px;line-height:.9;margin-bottom:.75rem}
-.hero h1 em{font-style:italic;color:var(--ac)}
-.hero p{color:var(--il);font-size:14px}
-.rgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:1.5rem}
-.rc{background:var(--w);border-radius:14px;padding:1.5rem 1.1rem;border:2px solid var(--bd);cursor:pointer;transition:all .2s}
-.rc:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(45,27,107,.12)}
-.rc.o:hover{border-color:var(--pm)}.rc.r:hover{border-color:var(--g)}
-.rc .em{font-size:36px;display:block;margin-bottom:10px}
-.rc h2{font-family:'DM Serif Display',serif;font-size:19px;margin-bottom:5px}
-.rc.o h2{color:var(--p)}.rc.r h2{color:var(--g)}
-.rc p{font-size:12px;color:var(--il);line-height:1.5;margin-bottom:13px}
-.rc ul{list-style:none;margin-bottom:16px}
-.rc ul li{font-size:11.5px;color:var(--im);padding:4px 0;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:6px}
-.rc ul li:last-child{border:none}
-.rc ul li::before{content:'✓';font-weight:700;font-size:10px}
-.rc.o li::before{color:var(--pm)}.rc.r li::before{color:var(--g)}
-.rbtn{width:100%;padding:10px;border-radius:9px;font-size:13px;font-weight:600;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .15s}
-.rc.o .rbtn{background:var(--p);color:#fff}.rc.o .rbtn:hover{background:var(--pm)}
-.rc.r .rbtn{background:var(--g);color:#fff}.rc.r .rbtn:hover{background:#1e5c40}
-.trust{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:1.25rem}
-.trust span{font-size:10.5px;color:var(--il)}
-
-/* PROGRESS */
-.prog{margin-bottom:1.5rem}
-.ph{display:flex;justify-content:space-between;margin-bottom:8px}
-.pl{font-size:12.5px;font-weight:500;color:var(--im)}
-.pp{font-size:11px;color:var(--il);font-family:'DM Mono',monospace}
-.pb{height:3px;background:var(--s2);border-radius:3px;overflow:hidden}
-.pf{height:100%;border-radius:3px;transition:width .35s}
-.pf.o{background:linear-gradient(90deg,var(--p),var(--ac))}
-.pf.r{background:linear-gradient(90deg,var(--g),var(--pm))}
-
-/* TABS */
-.tabs{display:flex;gap:5px;margin-bottom:1.5rem;overflow-x:auto;padding-bottom:3px;scrollbar-width:none}
-.tabs::-webkit-scrollbar{display:none}
-.tab{display:flex;align-items:center;gap:5px;padding:5px 11px;border-radius:20px;font-size:11.5px;font-weight:500;white-space:nowrap;border:1px solid transparent;flex-shrink:0}
-.tab.pend{background:var(--s2);color:var(--il)}
-.tab.done{background:var(--gl);color:var(--g)}
-.tab.av.o{background:var(--pp);color:var(--p);border-color:rgba(74,45,156,.2)}
-.tab.av.r{background:var(--gl);color:var(--g);border-color:rgba(45,122,90,.2)}
-.tn{width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-family:'DM Mono',monospace;flex-shrink:0}
-.tab.pend .tn{background:var(--il);color:#fff}
-.tab.done .tn{background:var(--g);color:#fff}
-.tab.av.o .tn{background:var(--p);color:#fff}
-.tab.av.r .tn{background:var(--g);color:#fff}
-
-/* CARD */
-.card{background:var(--w);border:1px solid var(--bd);border-radius:12px;padding:1.25rem;margin-bottom:.85rem;box-shadow:0 2px 12px rgba(45,27,107,.06)}
-.ch{display:flex;align-items:center;gap:9px;margin-bottom:1rem;padding-bottom:.85rem;border-bottom:1px solid var(--bd)}
-.ci{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.ci.p{background:var(--pp)}.ci.p svg{color:var(--p)}
-.ci.g{background:var(--gl)}.ci.g svg{color:var(--g)}
-.ci svg{width:16px;height:16px}
-.ct{font-size:13.5px;font-weight:600;color:var(--ink)}
-.cs{font-size:11px;color:var(--il);margin-top:1px}
-
-/* FORM */
-.fg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.ff{grid-column:1/-1}
-.f{display:flex;flex-direction:column;gap:4px}
-.f label{font-size:10px;font-weight:600;color:var(--im);letter-spacing:.04em;text-transform:uppercase}
-.f input,.f select{height:40px;padding:0 11px;border:1px solid var(--bs);border-radius:7px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--ink);background:var(--w);outline:none;width:100%;transition:all .15s}
-.f input:focus,.f select:focus{border-color:var(--pm);box-shadow:0 0 0 3px rgba(74,45,156,.1)}
-.f input::placeholder{color:var(--il)}
-.igr{display:flex;align-items:center;border:1px solid var(--bs);border-radius:7px;overflow:hidden;background:var(--w);transition:all .15s}
-.igr:focus-within{border-color:var(--pm);box-shadow:0 0 0 3px rgba(74,45,156,.1)}
-.igpfx{padding:0 9px;font-size:12px;color:var(--il);background:var(--s2);height:40px;display:flex;align-items:center;border-right:1px solid var(--bs);white-space:nowrap}
-.igr input{border:none!important;box-shadow:none!important;flex:1;height:40px}
-.cpr{display:flex;gap:7px}
-.cpr input{flex:1;text-transform:uppercase;font-family:'DM Mono',monospace;letter-spacing:.05em}
-
-/* CATEGORY */
-.catg{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
-.catc{border:1.5px solid var(--bd);border-radius:10px;padding:10px 5px;text-align:center;cursor:pointer;transition:all .2s;background:var(--w)}
-.catc:hover{border-color:var(--pm);background:var(--pp)}
-.catc.sel{border-color:var(--p);background:var(--pp);box-shadow:0 0 0 3px rgba(74,45,156,.1)}
-.ce{font-size:22px;margin-bottom:4px}
-.cn{font-size:10px;font-weight:600;color:var(--ink)}
-.cen{font-size:9px;color:var(--g);font-weight:600}
-.vsec{border:1px solid var(--bd);border-radius:10px;padding:.9rem 1rem;background:var(--s2);margin-top:10px}
-.vlbl{font-size:10px;font-weight:600;color:var(--im);text-transform:uppercase;letter-spacing:.04em;margin-bottom:7px}
-.vrow{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-.vnum{font-family:'DM Serif Display',serif;font-size:28px;color:var(--p);min-width:70px}
-input[type=range]{flex:1;accent-color:var(--p);height:4px;cursor:pointer}
-.rlbls{display:flex;justify-content:space-between;font-size:9px;color:var(--il);margin-bottom:10px;font-family:'DM Mono',monospace}
-.egrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.ec{background:var(--w);border:1px solid var(--bd);border-radius:7px;padding:9px 10px}
-.elbl{font-size:9px;color:var(--il);text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px}
-.eval{font-size:17px;font-weight:600;color:var(--g)}
-.esub{font-size:9px;color:var(--il)}
-.nb{background:var(--pp);border-left:3px solid var(--pm);border-radius:0 7px 7px 0;padding:8px 11px;font-size:11.5px;color:var(--p);line-height:1.6;margin-top:9px}
-
-/* TERMS */
-.twrap{position:relative}
-.tbox{height:240px;overflow-y:auto;border:1px solid var(--bs);border-radius:7px;padding:1rem;font-size:12px;line-height:1.75;color:var(--im);background:var(--sf)}
-.tbox::-webkit-scrollbar{width:3px}
-.tbox::-webkit-scrollbar-thumb{background:var(--pm);border-radius:3px}
-.tbox h3{font-family:'DM Serif Display',serif;font-size:13px;color:var(--p);margin:1rem 0 .4rem;padding-bottom:3px;border-bottom:1px solid var(--bd)}
-.tbox h3:first-child{margin-top:0}
-.tbox p{margin-bottom:.55rem}
-.tbox ul{padding-left:1.1rem;margin-bottom:.55rem}
-.tbox ul li{margin-bottom:.25rem}
-.tbox strong{color:var(--ink);font-weight:600}
-.tbox table{width:100%;border-collapse:collapse;font-size:11px;margin:6px 0 10px}
-.tbox table th{text-align:left;padding:5px 7px;background:rgba(45,27,107,.07);font-weight:600;color:var(--p);font-size:10px;text-transform:uppercase}
-.tbox table th:not(:first-child){text-align:right}
-.tbox table td{padding:4px 7px;border-bottom:1px solid var(--bd)}
-.tbox table td:not(:first-child){text-align:right;font-family:'DM Mono',monospace}
-.hook{background:var(--pp);border-radius:7px;padding:.75rem .9rem;margin-bottom:1rem;font-size:12px;color:var(--pm);line-height:1.65;border-left:3px solid var(--pm)}
-.tf{position:absolute;bottom:0;left:0;right:0;height:40px;background:linear-gradient(transparent,var(--sf));pointer-events:none;border-radius:0 0 7px 7px;transition:opacity .3s}
-.tbdg{display:flex;align-items:center;gap:7px;margin-top:8px;padding:8px 12px;border-radius:7px;font-size:11.5px;font-weight:500;border:1px solid var(--bd);background:var(--s2);color:var(--il);transition:all .3s}
-.tbdg.ok{background:var(--gl);color:var(--g);border-color:rgba(45,122,90,.2)}
-.tbdg svg{width:14px;height:14px;flex-shrink:0}
-.ckw{transition:opacity .3s}.ckw.lk{opacity:.4;pointer-events:none}
-.cki{display:flex;gap:10px;padding:11px 0;border-bottom:1px solid var(--bd);align-items:flex-start}
-.cki:last-child{border:none;padding-bottom:0}
-.cki input[type=checkbox]{width:16px;height:16px;accent-color:var(--p);flex-shrink:0;margin-top:2px;cursor:pointer}
-.ckt{font-size:12.5px;color:var(--ink);line-height:1.55}
-.cks{font-size:10.5px;color:var(--il);margin-top:3px}
-
-/* PAYMENT */
-.mn{display:flex;align-items:flex-start;gap:9px;padding:10px 12px;border-radius:7px;font-size:11.5px;line-height:1.6;margin-bottom:12px;border:1px solid;background:#FFF8E6;border-color:rgba(200,150,50,.35);color:#7A5C10}
-.mn svg{width:14px;height:14px;flex-shrink:0;margin-top:2px}
-.mn code{font-family:'DM Mono',monospace;font-size:10px;background:rgba(0,0,0,.07);padding:1px 4px;border-radius:3px}
-.dgr{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
-.cvr{display:flex;align-items:center;gap:12px;background:var(--gl);border:1px solid rgba(45,122,90,.2);border-radius:10px;padding:.9rem 1.1rem}
-.bch{height:26px;padding:0 9px;border-radius:4px;background:var(--pp);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--p);text-transform:uppercase;font-family:'DM Mono',monospace;flex-shrink:0}
-.sbdgs{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
-.sbdg{font-size:9.5px;color:var(--il);background:var(--s2);padding:3px 9px;border-radius:20px;border:1px solid var(--bd)}
-
-/* CLABE */
-.clrow{display:flex;gap:7px}
-.clrow input{flex:1;font-family:'DM Mono',monospace;font-size:15px;letter-spacing:.08em;text-align:center;height:46px;border:1.5px solid var(--bs);border-radius:7px;outline:none;color:var(--ink);background:var(--w);transition:all .15s}
-.clrow input:focus{border-color:var(--pm);box-shadow:0 0 0 3px rgba(74,45,156,.1)}
-.bdet{display:none;align-items:center;gap:7px;margin-top:7px;font-size:11.5px;color:var(--im)}
-.bdot{width:7px;height:7px;border-radius:50%;background:var(--pm);flex-shrink:0}
-.clok{display:none;align-items:center;gap:12px;background:var(--gl);border:1px solid rgba(45,122,90,.2);border-radius:10px;padding:.9rem 1.1rem}
-.clinfo .ct2{font-weight:600;font-size:13.5px;color:var(--g)}
-.clinfo .cs2{font-size:11px;color:var(--im);font-family:'DM Mono',monospace;margin-top:2px}
-
-/* SIGNATURE */
-.sigc{width:100%;height:110px;border:1px solid var(--bs);border-radius:7px;cursor:crosshair;background:#FDFCFE;display:block;touch-action:none}
-.sigh{display:flex;justify-content:space-between;align-items:center;margin-top:5px;font-size:10.5px;color:var(--il)}
-.tsr{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--bd);font-size:12.5px}
-.tsr:last-child{border:none}
-
-/* SUMMARY */
-.sr{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--bd);font-size:12.5px}
-.sr:last-child{border:none}
-.sl{color:var(--il)}.sv{color:var(--ink);font-weight:500;text-align:right;max-width:62%}
-.sv.mono{font-family:'DM Mono',monospace;font-size:10.5px}
-.hb{background:var(--s2);border-radius:7px;padding:9px 10px;font-family:'DM Mono',monospace;font-size:9.5px;color:var(--il);word-break:break-all;line-height:1.6;margin-top:5px}
-
-/* BUTTONS */
-.pill{display:inline-flex;align-items:center;gap:3px;padding:3px 8px;border-radius:20px;font-size:10.5px;font-weight:600}
-.pill-ok{background:var(--gl);color:var(--g)}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:7px;font-size:13.5px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;border:1px solid var(--bs);background:transparent;color:var(--ink);transition:all .15s}
-.btn:hover{background:var(--s2)}
-.btn svg{width:15px;height:15px}
-.btnp{background:var(--p);color:#fff;border-color:var(--p)}
-.btnp:hover{background:var(--pm)}
-.btnp.g{background:var(--g);border-color:var(--g)}
-.btnp.g:hover{background:#1e5c40}
-.btnp:disabled{opacity:.38;cursor:not-allowed}
-.btns{padding:5px 11px;font-size:11.5px;border-radius:7px;border:1px solid var(--bs);background:transparent;color:var(--im);cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;display:inline-flex;align-items:center;gap:4px}
-.btns svg{width:12px;height:12px}
-.vbtn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:11px;border-radius:7px;font-size:14px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;border:none;background:var(--p);color:#fff;margin-top:12px}
-.vbtn.g{background:var(--g)}
-.errmsg{font-size:10.5px;color:#8B2020;margin-top:5px;min-height:15px}
-.nav{display:flex;justify-content:space-between;align-items:center;margin-top:1rem}
-.bl{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--il);cursor:pointer;margin-bottom:1rem}
-.bl svg{width:12px;height:12px}
-.sh{font-family:'DM Serif Display',serif;font-size:21px;color:var(--ink);margin-bottom:.2rem}
-.sd{font-size:12.5px;color:var(--il);margin-bottom:1rem}
-.saving{font-size:11px;color:var(--il);text-align:center;margin-top:8px}
-
-/* SUCCESS */
-.sucw{text-align:center;padding:1.75rem 1rem}
-.sring{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem}
-.sring.o{background:var(--pp);border:2px solid rgba(74,45,156,.2)}
-.sring.o svg{color:var(--p)}
-.sring.r{background:var(--gl);border:2px solid rgba(45,122,90,.2)}
-.sring.r svg{color:var(--g)}
-.sring svg{width:28px;height:28px}
-.stit{font-family:'DM Serif Display',serif;font-size:24px;color:var(--ink);margin-bottom:.4rem}
-.ssub{font-size:13px;color:var(--il);line-height:1.65;max-width:380px;margin:0 auto}
-.cmeta{background:var(--s2);border-radius:8px;padding:.9rem 1rem;margin:1rem 0 0}
-
-@media(max-width:480px){.fg,.dgr,.egrid{grid-template-columns:1fr}.ff{grid-column:1}.catg{grid-template-columns:repeat(3,1fr)}.rgrid{grid-template-columns:1fr}}
-</style>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.65">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+    span.s1 {font: 12.0px 'Lucida Grande'}
+    span.s2 {font: 12.0px 'Apple Color Emoji'}
+  </style>
 </head>
 <body>
-<header class="hdr">
-  <div class="logo">closet2me</div>
-  <div class="hbg n" id="hbg">Elige tu rol</div>
-</header>
-<div class="wrap">
-
-<!-- LANDING -->
-<div class="sc on" id="sc-land">
-  <div class="hero">
-    <h1>Renta.<br><em>Stylea.</em><br>Repite.</h1>
-    <p>¿Cómo quieres participar hoy?</p>
-  </div>
-  <div class="rgrid">
-    <div class="rc o" onclick="selRol('owner')">
-      <span class="em">👗</span>
-      <h2>Soy propietario</h2>
-      <p>Pon a trabajar tu guardarropa y genera ingresos reales.</p>
-      <ul>
-        <li>Gana hasta <strong>$274 por renta</strong></li>
-        <li>3 días · SPEI a tu CLABE</li>
-        <li>closet2me gestiona todo</li>
-        <li>Firma digital + contrato</li>
-      </ul>
-      <button class="rbtn">Registrar mi prenda →</button>
-    </div>
-    <div class="rc r" onclick="selRol('renter')">
-      <span class="em">✨</span>
-      <h2>Quiero rentar</h2>
-      <p>Accede a looks increíbles sin comprar ni acumular.</p>
-      <ul>
-        <li>Prendas de <strong>$250 a $1,600</strong></li>
-        <li>3 días · depósito sin cobro</li>
-        <li>Pago seguro con Stripe</li>
-        <li>Firma digital + contrato</li>
-      </ul>
-      <button class="rbtn">Quiero rentar →</button>
-    </div>
-  </div>
-  <div class="trust">
-    <span>🔒 TLS · PCI DSS</span><span>⚡ Stripe</span>
-    <span>📄 Firma LFEA</span><span>🇲🇽 Guanajuato</span>
-  </div>
-</div>
-
-<!-- OWNER FLOW -->
-<div class="sc" id="sc-owner">
-  <div class="prog"><div class="ph"><span class="pl" id="oplbl">Paso 1 de 5</span><span class="pp" id="oppct">20%</span></div><div class="pb"><div class="pf o" id="opf" style="width:20%"></div></div></div>
-  <div class="tabs">
-    <div class="tab av o" id="ot0"><span class="tn">1</span>Perfil</div>
-    <div class="tab pend" id="ot1"><span class="tn">2</span>Prenda</div>
-    <div class="tab pend" id="ot2"><span class="tn">3</span>Fotos</div>
-    <div class="tab pend" id="ot3"><span class="tn">4</span>Términos</div>
-    <div class="tab pend" id="ot4"><span class="tn">5</span>CLABE</div>
-    <div class="tab pend" id="ot5"><span class="tn">6</span>Firma</div>
-  </div>
-
-  <div class="pg on" id="op0">
-    <div class="bl" onclick="backLand()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Cambiar rol</div>
-    <h2 class="sh">Tu perfil de propietario</h2><p class="sd">Las redes son opcionales pero aumentan tu visibilidad.</p>
-    <div class="card">
-      <div class="ch"><div class="ci p"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div class="ct">Datos de contacto</div><div class="cs">Nombre y teléfono requeridos</div></div></div>
-      <div class="fg">
-        <div class="f ff"><label>Nombre completo</label><input type="text" id="on" placeholder="Tu nombre"></div>
-        <div class="f"><label>Teléfono</label><input type="tel" id="oph" placeholder="+52 xxx xxx xxxx"></div>
-        <div class="f"><label>Correo</label><input type="email" id="oem" placeholder="correo@ejemplo.com"></div>
-        <div class="f"><label>Instagram</label><div class="igr"><span class="igpfx">@</span><input type="text" id="oig" placeholder="usuario"></div></div>
-        <div class="f"><label>TikTok</label><div class="igr"><span class="igpfx">@</span><input type="text" id="otk" placeholder="usuario"></div></div>
-      </div>
-    </div>
-    <div class="nav"><div></div><button class="btn btnp" onclick="oGo(1)">Continuar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button></div>
-  </div>
-
-  <div class="pg" id="op1">
-    <h2 class="sh">Tu prenda</h2><p class="sd">Elige categoría y declara el valor real.</p>
-    <div class="card">
-      <div class="ch"><div class="ci p"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.34-2.23z"/></svg></div><div><div class="ct">Categoría</div><div class="cs">Elige la que mejor la describe</div></div></div>
-      <div class="catg">
-        <div class="catc" id="cc-v" onclick="oSelC('v')"><div class="ce">👗</div><div class="cn">Vestido</div><div class="cen">↑$274</div></div>
-        <div class="catc" id="cc-c" onclick="oSelC('c')"><div class="ce">🧥</div><div class="cn">Chamarra</div><div class="cen">↑$239</div></div>
-        <div class="catc" id="cc-j" onclick="oSelC('j')"><div class="ce">👖</div><div class="cn">Jeans/Faldas</div><div class="cen">↑$197</div></div>
-        <div class="catc" id="cc-a" onclick="oSelC('a')"><div class="ce">👜</div><div class="cn">Accesorios</div><div class="cen">↑$239</div></div>
-        <div class="catc" id="cc-b" onclick="oSelC('b')"><div class="ce">👕</div><div class="cn">Blusas</div><div class="cen">↑$162</div></div>
-      </div>
-      <div class="vsec" id="ovsec" style="display:none">
-        <div class="vlbl">Valor declarado de la prenda</div>
-        <div class="vrow"><div class="vnum" id="ovn">$500</div><input type="range" id="ovsl" min="500" max="1600" value="500" step="10" oninput="oUpdE(this.value)"></div>
-        <div class="rlbls"><span id="ormin">$500</span><span id="ormax">$1,600</span></div>
-        <div class="egrid">
-          <div class="ec"><div class="elbl">Ganancia por renta</div><div class="eval" id="oep">$85</div><div class="esub">Período base 3 días</div></div>
-          <div class="ec"><div class="elbl">Potencial mensual ×4</div><div class="eval" id="oem2">$340</div><div class="esub">Estimado sin garantía</div></div>
-        </div>
-        <div class="nb">El valor declarado determina ganancia y depósito de garantía. Declara el valor real.</div>
-      </div>
-    </div>
-    <div class="nav"><button class="btn" onclick="oGo(0)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Atrás</button><button class="btn btnp" id="obn1" onclick="oGo(2)" disabled>Continuar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button></div>
-  </div>
-
-  <div class="pg" id="op2">
-    <h2 class="sh">Fotografías de tu prenda</h2><p class="sd">4 imágenes: 2 del producto solo + 2 de cómo lo usarías.</p>
-    <div class="card">
-      <div class="ch"><div class="ci p"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 0 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div><div><div class="ct">Sin usar — producto</div><div class="cs">Extendida, colgada o doblada</div></div></div>
-      <div class="prow">
-        <div class="pz" id="oz0" onclick="oTr(0)"><input type="file" id="ou0" accept="image/*" onchange="oPh(0,this)"><div class="pph" id="oph0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><p>Foto 1</p><small>Frente completo</small></div><img class="ppv" id="opv0"><button class="pchg" id="opc0" onclick="oCp(event,0)">Cambiar</button><div class="pck" id="opk0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg></div></div>
-        <div class="pz" id="oz1" onclick="oTr(1)"><input type="file" id="ou1" accept="image/*" onchange="oPh(1,this)"><div class="pph" id="oph1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><p>Foto 2</p><small>Detalle / etiqueta</small></div><img class="ppv" id="opv1"><button class="pchg" id="opc1" onclick="oCp(event,1)">Cambiar</button><div class="pck" id="opk1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg></div></div>
-      </div>
-      <div class="ch" style="margin-top:4px;border-top:1px solid var(--bd);padding-top:.85rem;border-bottom:none;margin-bottom:0;padding-bottom:0"><div class="ci g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div class="ct">Styling — cómo lo usarías</div><div class="cs">En outfit completo</div></div></div>
-      <div class="prow" style="margin-top:12px">
-        <div class="pz" id="oz2" onclick="oTr(2)"><input type="file" id="ou2" accept="image/*" onchange="oPh(2,this)"><div class="pph" id="oph2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><p>Foto 3</p><small>Outfit completo</small></div><img class="ppv" id="opv2"><button class="pchg" id="opc2" onclick="oCp(event,2)">Cambiar</button><div class="pck" id="opk2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg></div></div>
-        <div class="pz" id="oz3" onclick="oTr(3)"><input type="file" id="ou3" accept="image/*" onchange="oPh(3,this)"><div class="pph" id="oph3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><p>Foto 4</p><small>Perspectiva diferente</small></div><img class="ppv" id="opv3"><button class="pchg" id="opc3" onclick="oCp(event,3)">Cambiar</button><div class="pck" id="opk3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg></div></div>
-      </div>
-      <div class="tbdg" id="obdg" style="margin-top:9px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span id="obdgtxt">Sube las 4 fotos para continuar (0/4)</span></div>
-    </div>
-    <div class="nav"><button class="btn" onclick="oGo(1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Atrás</button><button class="btn btnp" id="obn2" onclick="oGo(3)" disabled>Continuar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button></div>
-  </div>
-
-  <div class="pg" id="op3">
-    <h2 class="sh">Términos y condiciones</h2><p class="sd">Lee hasta el final para habilitar la aceptación.</p>
-    <div class="card">
-      <div class="twrap"><div class="tbox" id="otbox" onscroll="oChkS()">
-        <div class="hook">Compartir tu guardarropa con closet2me es la forma más inteligente de sacarle provecho a lo que ya tienes.</div>
-        <h3>1. Intermediario tecnológico</h3><p>closet2me conecta propietarios y renteros pero <strong>no asume responsabilidad directa</strong> por el estado de las prendas. La responsabilidad recae en ambas partes.</p>
-        <h3>2. Tasa de servicio</h3><p>Se descuenta una <strong>tasa de servicio operativa</strong> que cubre gestión, <strong>limpieza post-renta</strong>, logística de entrega y retorno. El monto neto se muestra antes de aceptar cada renta.</p>
-        <h3>3. Período y tiempos</h3><p>Período base: <strong>3 días naturales</strong>. Puede extenderse por tiempos de limpieza e inspección. El retorno puede tardar hasta 2 días hábiles adicionales sin compensación.</p>
-        <h3>4. Responsabilidad por daños</h3><p>Los daños durante la renta son responsabilidad del <strong>rentero</strong>. Daños previos no declarados son responsabilidad del propietario.</p>
-        <h3>5. Pagos vía CLABE</h3><p>Ganancias depositadas por SPEI dentro de <strong>3 días hábiles</strong> tras confirmar devolución sin incidentes.</p>
-        <h3>6. Uso de imagen</h3><p>Al usar closet2me otorgas una <strong>licencia no exclusiva, gratuita e indefinida</strong> para usar tu imagen y fotografías con fines de publicidad y marketing, sin compensación adicional.</p>
-        <div style="height:20px"></div>
-      </div><div class="tf" id="otf"></div></div>
-      <div class="tbdg" id="otbdg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span id="ottxt">Desplázate hasta el final para habilitar</span></div>
-    </div>
-    <div class="card ckw lk" id="ockw">
-      <div class="cki"><input type="checkbox" id="ock1" onchange="oEvCk()"><div><div class="ckt"><strong>Acepto los términos y condiciones</strong> incluyendo la tasa de servicio, período de 3 días ampliable, política de daños y responsabilidad entre partes.</div><div class="cks">La tasa cubre limpieza, recepción y logística. closet2me es intermediario tecnológico.</div></div></div>
-      <div class="cki"><input type="checkbox" id="ock2" onchange="oEvCk()"><div><div class="ckt"><strong>Autorizo el uso de mi imagen y fotografías</strong> para publicidad y marketing de closet2me sin compensación adicional.</div></div></div>
-    </div>
-    <div class="nav"><button class="btn" onclick="oGo(2)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Atrás</button><button class="btn btnp" id="obn3" onclick="oGo(4)" disabled>Continuar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button></div>
-  </div>
-
-  <div class="pg" id="op4">
-    <h2 class="sh">Cuenta bancaria</h2><p class="sd">Aquí recibirás tus ganancias vía SPEI.</p>
-    <div class="mn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><div>Vista previa. En producción activa Stripe Connect con <code>pk_test_TU_CLAVE</code>.</div></div>
-    <div class="card">
-      <div class="ch"><div class="ci p"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div><div><div class="ct">CLABE interbancaria</div><div class="cs">18 dígitos · SPEI · Stripe Connect</div></div></div>
-      <div id="oclf">
-        <div class="f"><label>Titular de la cuenta</label><input type="text" id="ocn" placeholder="Como en tu estado de cuenta"></div>
-        <div class="f" style="margin-top:10px"><label>CLABE (18 dígitos)</label>
-          <div class="clrow"><input type="text" id="ocin" placeholder="000000000000000000" maxlength="18" oninput="oCLin(this)" inputmode="numeric"><button class="btns" onclick="oVCL()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Verificar</button></div>
-          <div class="bdet" id="obdet"><div class="bdot"></div><span id="obnm">—</span></div>
-          <div class="errmsg" id="ocerr"></div>
-        </div>
-      </div>
-      <div class="clok" id="oclok"><div class="bch" id="ochip">BBVA</div><div class="clinfo"><div class="ct2">CLABE verificada</div><div class="cs2" id="ocmsk">—</div></div><button class="btns" onclick="oChCL()" style="margin-left:auto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/></svg>Cambiar</button></div>
-      <div class="sbdgs"><span class="sbdg">🔒 PCI DSS</span><span class="sbdg">🔐 TLS 256-bit</span><span class="sbdg">Stripe Connect · SPEI</span></div>
-    </div>
-    <div class="nav"><button class="btn" onclick="oGo(3)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Atrás</button><button class="btn btnp" id="obn4" onclick="oGo(5)" disabled>Continuar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button></div>
-  </div>
-
-  <div class="pg" id="op5">
-    <h2 class="sh">Firma y confirma</h2><p class="sd">Revisa el resumen y firma para completar tu registro.</p>
-    <div class="card">
-      <div class="ch"><div class="ci p"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><div><div class="ct">Resumen de registro</div><div class="cs">Verifica antes de firmar</div></div></div>
-      <div class="sr"><span class="sl">Nombre</span><span class="sv" id="osn">—</span></div>
-      <div class="sr"><span class="sl">Teléfono</span><span class="sv" id="osph">—</span></div>
-      <div class="sr"><span class="sl">Categoría</span><span class="sv" id="osc">—</span></div>
-      <div class="sr"><span class="sl">Valor declarado</span><span class="sv" id="osv">—</span></div>
-      <div class="sr"><span class="sl">Ganancia / renta</span><span class="sv" id="ose">—</span></div>
-      <div class="sr"><span class="sl">CLABE</span><span class="sv" id="oscl">—</span></div>
-      <div class="sr"><span class="sl">Timestamp</span><span class="sv mono" id="osts">—</span></div>
-      <div style="margin-top:10px"><div style="font-size:9.5px;color:var(--il);font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">Hash SHA-256</div><div class="hb" id="osh">—</div></div>
-    </div>
-    <div class="card">
-      <div class="ch"><div class="ci p"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 19.5v.5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8.5L18 5.5"/><path d="M8 18h1l12.5-12.5-1-1L8 17v1z"/></svg></div><div><div class="ct">Firma autógrafa digital</div><div class="cs">Mínimo 3 trazos para validar</div></div></div>
-      <canvas id="osigc" class="sigc" width="560" height="110"></canvas>
-      <div class="sigh"><span id="osigh">Firma en el recuadro de arriba</span><button class="btns" onclick="oClrS()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>Limpiar</button></div>
-    </div>
-    <div class="card"><div class="cki" style="padding:0;border:none"><input type="checkbox" id="ofck" onchange="oEvF()" style="width:16px;height:16px;accent-color:var(--p);flex-shrink:0;margin-top:2px;cursor:pointer"><div><div class="ckt" style="font-weight:500">Confirmo que todos los datos son correctos y que esta firma digital tiene la misma validez que una firma autógrafa conforme a la LFEA y el Código de Comercio de México.</div></div></div></div>
-    <div class="nav"><button class="btn" onclick="oGo(4)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Atrás</button><button class="btn btnp" id="obn5" onclick="oFin()">Registrar prenda</button></div>
-    <p class="saving" id="osaving"></p>
-  </div>
-
-  <div class="pg" id="op6">
-    <div class="card"><div class="sucw"><div class="sring o"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><h2 class="stit">¡Tu prenda está lista!</h2><p class="ssub">Registro completado con firma digital y hash SHA-256. La revisaremos y publicaremos en 24–48 horas.</p></div><div class="cmeta"><div class="sr"><span class="sl">ID de registro</span><span class="sv mono" id="ocid">—</span></div><div class="sr"><span class="sl">Propietario</span><span class="sv" id="ocname">—</span></div><div class="sr" style="border:none"><span class="sl">Ganancia estimada</span><span class="sv" id="ocearn">—</span></div></div><p style="font-size:11.5px;color:var(--g);text-align:center;margin-top:1rem;font-weight:500">🎉 ¡Bienvenido a closet2me!</p></div>
-  </div>
-</div>
-
-<!-- RENTER FLOW -->
-<div class="sc" id="sc-renter">
-  <div class="prog"><div class="ph"><span class="pl" id="rplbl">Paso 1 de 5</span><span class="pp" id="rppct">20%</span></div><div class="pb"><div class="pf r" id="rpf" style="width:20%"></div></div></div>
-  <div class="tabs">
-    <div class="tab av r" id="rt0"><span class="tn">1</span>Identidad</div>
-    <div class="tab pend" id="rt1"><span class="tn">2</span>Términos</div>
-    <div class="tab pend" id="rt2"><span class="tn">3</span>Pago</div>
-    <div class="tab pend" id="rt3"><span class="tn">4</span>Firma</div>
-    <div class="tab pend" id="rt4"><span class="tn">5</span>Confirmar</div>
-  </div>
-
-  <div class="pg on" id="rp0">
-    <div class="bl" onclick="backLand()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Cambiar rol</div>
-    <h2 class="sh">Datos de identificación</h2><p class="sd">Ingresa tus datos tal como aparecen en tu INE vigente.</p>
-    <div class="card">
-      <div class="ch"><div class="ci g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M13 10h4M13 14h4M5 14a4 4 0 0 1 8 0"/></svg></div><div><div class="ct">Identificación oficial</div><div class="cs">INE, pasaporte o cédula profesional</div></div></div>
-      <div class="fg">
-        <div class="f ff"><label>Nombre completo</label><input type="text" id="rn" placeholder="Como aparece en tu INE"></div>
-        <div class="f"><label>Fecha de nacimiento</label><input type="date" id="rdob"></div>
-        <div class="f"><label>Tipo de ID</label><select id="rtid"><option value="">Selecciona...</option><option>INE / IFE</option><option>Pasaporte mexicano</option><option>Cédula profesional</option></select></div>
-        <div class="f ff"><label>CURP</label><div class="cpr"><input type="text" id="rcurp" placeholder="ABCD123456HDFXXX00" maxlength="18"><button class="btns" onclick="rVCURP()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Verificar</button></div><div class="errmsg" id="rcst"></div></div>
-        <div class="f"><label>Correo</label><input type="email" id="rem" placeholder="correo@ejemplo.com"></div>
-        <div class="f"><label>Celular</label><input type="tel" id="rtel" placeholder="+52 xxx xxx xxxx"></div>
-      </div>
-    </div>
-    <div class="nav"><div></div><button class="btn btnp g" onclick="rGo(1)">Continuar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button></div>
-  </div>
-
-  <div class="pg" id="rp1">
-    <h2 class="sh">Términos y condiciones</h2><p class="sd">Lee hasta el final para habilitar la aceptación.</p>
-    <div class="card">
-      <div class="twrap"><div class="tbox" id="rtbox" onscroll="rChkS()">
-        <div class="hook">Imagina estrenar un look diferente cada semana sin gastar una fortuna. Eso es lo que closet2me hace posible.</div>
-        <h3>1. Tu privacidad</h3><p>Conforme a la <strong>LFPDPPP</strong> recopilamos nombre, CURP, correo, celular y método de pago. Solo para verificar identidad, procesar rentas y gestionar pagos. Responsable: privacidad@closet2me.mx</p>
-        <h3>2. Condiciones de uso</h3><p>Mayor de 18 años, ID vigente, residente en México. Usa la prenda solo para el fin declarado, devuelve en tiempo y reporta daños inmediatamente. La responsabilidad por daños durante la renta recae en el rentero.</p>
-        <h3>3. Categorías y precios</h3>
-        <table><thead><tr><th>Categoría</th><th>Valor mín.</th><th>Valor máx.</th></tr></thead><tbody><tr><td>Vestido</td><td>$500</td><td>$1,600</td></tr><tr><td>Chamarra</td><td>$700</td><td>$1,400</td></tr><tr><td>Jeans/Faldas</td><td>$300</td><td>$1,150</td></tr><tr><td>Accesorios</td><td>$280</td><td>$1,400</td></tr><tr><td>Blusas</td><td>$250</td><td>$950</td></tr></tbody></table>
-        <p><strong>Período base: 3 días naturales.</strong> Retraso sin aviso: <strong>$150 MXN/día.</strong></p>
-        <h3>4. Depósito y daños</h3><p>Depósito bloqueado al confirmar — <strong>no se cobra</strong> sin incidentes. Se libera en 24–48 hrs. Cargos por daño sobre valor declarado: mancha removible 10–20%, pérdida total 100%+$200 MXN.</p>
-        <h3>5. Cancelaciones</h3><p>+48 hrs: 100% · 24-48 hrs: 50% · menos de 24 hrs: sin reembolso.</p>
-        <h3>6. Jurisdicción</h3><p>Disputas vía Centro de Resolución. Jurisdicción: <strong>Estado de Guanajuato, México</strong>.</p>
-        <div style="height:20px"></div>
-      </div><div class="tf" id="rtf"></div></div>
-      <div class="tbdg" id="rtbdg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span id="rttxt">Desplázate hasta el final para habilitar</span></div>
-    </div>
-    <div class="card ckw lk" id="rckw">
-      <div class="cki"><input type="checkbox" id="rc1" onchange="rEvCk()"><div><div class="ckt">Acepto el aviso de privacidad y el tratamiento de mis datos conforme a la LFPDPPP.</div></div></div>
-      <div class="cki"><input type="checkbox" id="rc2" onchange="rEvCk()"><div><div class="ckt">Acepto las condiciones de uso y la responsabilidad por daños durante la renta.</div></div></div>
-      <div class="cki"><input type="checkbox" id="rc3" onchange="rEvCk()"><div><div class="ckt">Acepto el período base de 3 días y el cargo de $150 MXN/día por retraso.</div></div></div>
-      <div class="cki"><input type="checkbox" id="rc4" onchange="rEvCk()"><div><div class="ckt">Acepto la política de daños y autorizo cargos automáticos sobre el valor declarado.</div></div></div>
-      <div class="cki"><input type="checkbox" id="rc5" onchange="rEvCk()"><div><div class="ckt">Autorizo el bloqueo temporal del depósito de garantía al confirmar cada renta.</div></div></div>
-      <div class="cki"><input type="checkbox" id="rc6" onchange="rEvCk()"><div><div class="ckt">He leído la totalidad del documento y acepto quedar sujeto/a a estos términos.</div></div></div>
-    </div>
-    <div class="nav"><button class="btn" onclick="rGo(0)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Atrás</button><button class="btn btnp g" id="rbn1" onclick="rGo(2)" disabled>Continuar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button></div>
-  </div>
-
-  <div class="pg" id="rp2">
-    <h2 class="sh">Método de pago</h2><p class="sd">Tu tarjeta no se cobra ahora. Se guarda cifrada para el depósito de garantía.</p>
-    <div class="mn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><div>Vista previa sin Stripe. Prueba: <code>4242 4242 4242 4242</code></div></div>
-    <div class="card">
-      <div class="ch"><div class="ci g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div><div><div class="ct">Datos de la tarjeta</div><div class="cs">Cifrado TLS · Procesado por Stripe</div></div></div>
-      <div id="rdf">
-        <div class="f"><label>Titular de la tarjeta</label><input type="text" id="rdh" placeholder="Nombre completo"></div>
-        <div class="f" style="margin-top:10px"><label>Número de tarjeta</label><input type="text" id="rdc" placeholder="4242 4242 4242 4242" maxlength="19" oninput="fmtC(this)" style="font-family:'DM Mono',monospace;letter-spacing:.06em"></div>
-        <div class="dgr">
-          <div class="f"><label>Vencimiento</label><input type="text" id="rde" placeholder="MM / AA" maxlength="7" oninput="fmtE(this)" style="font-family:'DM Mono',monospace"></div>
-          <div class="f"><label>CVC</label><input type="text" id="rdcv" placeholder="123" maxlength="4" style="font-family:'DM Mono',monospace"></div>
-        </div>
-        <div class="errmsg" id="rderr"></div>
-        <button class="vbtn g" onclick="rVDemo()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Verificar y guardar tarjeta</button>
-      </div>
-      <div class="cvr" id="rcvr" style="display:none">
-        <div class="bch" id="rbch">VISA</div>
-        <div><div style="font-weight:600;font-size:13.5px;color:var(--g)">Tarjeta verificada</div><div style="font-size:11.5px;color:var(--im);font-family:'DM Mono',monospace;margin-top:2px">•••• •••• •••• <span id="rl4">4242</span></div></div>
-        <button class="btns" onclick="rChC()" style="margin-left:auto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/></svg>Cambiar</button>
-      </div>
-      <div class="sbdgs"><span class="sbdg">🔒 PCI DSS</span><span class="sbdg">🔐 TLS 256-bit</span><span class="sbdg">Powered by Stripe</span></div>
-    </div>
-    <div class="nav"><button class="btn" onclick="rGo(1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Atrás</button><button class="btn btnp g" id="rbn2" onclick="rGo(3)" disabled>Continuar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button></div>
-  </div>
-
-  <div class="pg" id="rp3">
-    <h2 class="sh">Firma autógrafa digital</h2><p class="sd">Dibuja tu firma. Mínimo 3 trazos.</p>
-    <div class="card">
-      <div class="ch"><div class="ci g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 19.5v.5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8.5L18 5.5"/><path d="M8 18h1l12.5-12.5-1-1L8 17v1z"/></svg></div><div><div class="ct">Área de firma</div><div class="cs">Mínimo 3 trazos para validar</div></div></div>
-      <canvas id="rsigc" class="sigc" width="560" height="110"></canvas>
-      <div class="sigh"><span id="rsigh">Firma en el recuadro de arriba</span><button class="btns" onclick="rClrS()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>Limpiar</button></div>
-    </div>
-    <div class="card">
-      <div class="tsr"><span style="color:var(--il)">Fecha y hora (CDMX)</span><span style="font-family:'DM Mono',monospace;font-size:11.5px;font-weight:500" id="rtsv">—</span></div>
-      <div class="tsr"><span style="color:var(--il)">Plataforma</span><span style="font-family:'DM Mono',monospace;font-size:11.5px;font-weight:500" id="ruav">—</span></div>
-      <div class="tsr" style="border:none"><span style="color:var(--il)">IP</span><span style="font-family:'DM Mono',monospace;font-size:11.5px;font-weight:500">registrada en servidor</span></div>
-    </div>
-    <div class="nav"><button class="btn" onclick="rGo(2)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Atrás</button><button class="btn btnp g" id="rbn3" onclick="rGo(4)" disabled>Revisar y confirmar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button></div>
-  </div>
-
-  <div class="pg" id="rp4">
-    <h2 class="sh">Confirma tu registro</h2><p class="sd">Verifica todos los datos antes de firmar.</p>
-    <div class="card">
-      <div class="ch"><div class="ci g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><div><div class="ct">Resumen de aceptación</div><div class="cs">Revisa antes de firmar definitivamente</div></div></div>
-      <div class="sr"><span class="sl">Nombre</span><span class="sv" id="rsn">—</span></div>
-      <div class="sr"><span class="sl">CURP</span><span class="sv mono" id="rsc">—</span></div>
-      <div class="sr"><span class="sl">Correo</span><span class="sv" id="rse">—</span></div>
-      <div class="sr"><span class="sl">Celular</span><span class="sv" id="rst">—</span></div>
-      <div class="sr"><span class="sl">Método de pago</span><span class="sv" id="rsp">—</span></div>
-      <div class="sr"><span class="sl">Firma digital</span><span class="sv"><span class="pill pill-ok">✓ Registrada</span></span></div>
-      <div class="sr"><span class="sl">Cláusulas</span><span class="sv"><span class="pill pill-ok">6 / 6</span></span></div>
-      <div class="sr"><span class="sl">Timestamp</span><span class="sv mono" id="rsts">—</span></div>
-      <div style="margin-top:10px"><div style="font-size:9.5px;color:var(--il);font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">Hash SHA-256</div><div class="hb" id="rsh">—</div></div>
-    </div>
-    <div class="card"><div class="cki" style="padding:0;border:none"><input type="checkbox" id="rfck" onchange="rEvF()" style="width:16px;height:16px;accent-color:var(--g);flex-shrink:0;margin-top:2px;cursor:pointer"><div><div class="ckt" style="font-weight:500">Confirmo que toda la información es correcta y que esta firma digital tiene la misma validez jurídica que una firma autógrafa conforme a la LFEA y el Código de Comercio de México.</div></div></div></div>
-    <div class="nav"><button class="btn" onclick="rGo(3)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Atrás</button><button class="btn btnp g" id="rbn4" onclick="rFin()">Firmar contrato <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></button></div>
-    <p class="saving" id="rsaving"></p>
-  </div>
-
-  <div class="pg" id="rp5">
-    <div class="card"><div class="sucw"><div class="sring r"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><h2 class="stit">¡Ya eres parte de closet2me!</h2><p class="ssub">Contrato firmado con método de pago verificado, firma digital y hash SHA-256.</p></div><div class="cmeta"><div class="sr"><span class="sl">ID de contrato</span><span class="sv mono" id="rcid">—</span></div><div class="sr"><span class="sl">Firmante</span><span class="sv" id="rcname">—</span></div><div class="sr" style="border:none"><span class="sl">Fecha y hora</span><span class="sv mono" id="rcts">—</span></div></div><p style="font-size:11.5px;color:var(--g);text-align:center;margin-top:1rem;font-weight:500">🎉 ¡Bienvenida/o a closet2me!</p></div>
-  </div>
-</div>
-
-</div>
-<script>
-/* ── SUPABASE CONFIG ── */
-const SURL='https://hbxmidxtrpoprxbytiuk.supabase.co';
-const SKEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhieG1pZHh0cnBvcHJ4Ynl0aXVrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5NDMyMDksImV4cCI6MjA5NjUxOTIwOX0.5i8WznnOS13280Ce1q6245flliEfTtPhO8ivAXF931Y';
-
-async function sbInsert(table,data){
-  try{
-    const r=await fetch(SURL+'/rest/v1/'+table,{
-      method:'POST',
-      headers:{'apikey':SKEY,'Authorization':'Bearer '+SKEY,'Content-Type':'application/json','Prefer':'return=minimal'},
-      body:JSON.stringify(data)
-    });
-    if(!r.ok){const e=await r.text();console.error('Supabase error:',e);return false;}
-    return true;
-  }catch(e){console.error('Error:',e);return false;}
-}
-
-/* ── CONSTANTS ── */
-const OSTEPS=['Paso 1 de 6 — Perfil','Paso 2 de 6 — Prenda','Paso 3 de 6 — Fotos','Paso 4 de 6 — Términos','Paso 5 de 6 — CLABE','Paso 6 de 6 — Firma'];
-const RSTEPS=['Paso 1 de 5 — Identidad','Paso 2 de 5 — Términos','Paso 3 de 5 — Pago','Paso 4 de 5 — Firma','Paso 5 de 5 — Confirmar'];
-const PCTS=['17%','33%','50%','67%','83%','100%'];
-const CATS={v:{n:'Vestido',e:'👗',min:500,max:1600,mE:274},c:{n:'Chamarra',e:'🧥',min:700,max:1400,mE:239},j:{n:'Jeans/Faldas',e:'👖',min:300,max:1150,mE:197},a:{n:'Accesorios',e:'👜',min:280,max:1400,mE:239},b:{n:'Blusas',e:'👕',min:250,max:950,mE:162}};
-const BANKS={'002':'BBVA México','006':'Bancomext','021':'HSBC México','036':'Inbursa','044':'Scotiabank','058':'Banregio','072':'Banorte','127':'Banco Azteca','137':'BanCoppel','143':'CIBanco','646':'STP','706':'Arcus','723':'Cuenca','732':'Mercado Pago'};
-
-/* ── STATE ── */
-let oCur=0,oSC=null,oIV=0,oClV='',oTs='',oHash='',oCD={},oSCtx=null,oStr=0,oDrw=false,oTR=false,oPhotos=[null,null,null,null];
-let rCur=0,rTR=false,rTs='',rHash='',rCD={},rPI=null,rL4=null,rBr=null,rSCtx=null,rStr=0,rDrw=false;
-
-async function sha256(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');}
-
-/* ── ROLE ── */
-function selRol(r){
-  document.getElementById('sc-land').classList.remove('on');
-  document.getElementById('sc-'+r).classList.add('on');
-  const h=document.getElementById('hbg');
-  h.textContent=r==='owner'?'Propietario':'Rentero';
-  h.className='hbg '+(r==='owner'?'o':'r');
-}
-function backLand(){
-  ['sc-owner','sc-renter'].forEach(function(id){document.getElementById(id).classList.remove('on');});
-  document.getElementById('sc-land').classList.add('on');
-  const h=document.getElementById('hbg');h.textContent='Elige tu rol';h.className='hbg n';
-}
-
-/* ── OWNER NAV ── */
-function oGo(n){
-  document.getElementById('op'+oCur).classList.remove('on');
-  if(oCur<6){const t=document.getElementById('ot'+oCur);t.classList.remove('av','o');if(n>oCur)t.classList.add('done');else t.classList.remove('done');}
-  oCur=n;
-  document.getElementById('op'+n).classList.add('on');
-  if(n<6){const t=document.getElementById('ot'+n);t.classList.remove('pend','done');t.classList.add('av','o');document.getElementById('oplbl').textContent=OSTEPS[n];document.getElementById('oppct').textContent=PCTS[n];document.getElementById('opf').style.width=PCTS[n];}
-  if(n===5){oInitSig();}
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-
-/* ── OWNER PHOTOS ── */
-function oTr(i){document.getElementById('ou'+i).click();}
-function oPh(i,inp){
-  const f=inp.files[0];if(!f)return;
-  const r=new FileReader();
-  r.onload=function(e){
-    oPhotos[i]=e.target.result;
-    document.getElementById('oph'+i).style.display='none';
-    const pv=document.getElementById('opv'+i);pv.src=e.target.result;pv.style.display='block';
-    document.getElementById('opc'+i).style.display='block';
-    document.getElementById('opk'+i).style.display='flex';
-    document.getElementById('oz'+i).classList.add('ok');
-    oChkPh();
-  };
-  r.readAsDataURL(f);
-}
-function oCp(e,i){
-  e.stopPropagation();
-  oPhotos[i]=null;
-  document.getElementById('opv'+i).style.display='none';
-  document.getElementById('opc'+i).style.display='none';
-  document.getElementById('opk'+i).style.display='none';
-  document.getElementById('oph'+i).style.display='flex';
-  document.getElementById('oz'+i).classList.remove('ok');
-  document.getElementById('ou'+i).value='';
-  oChkPh();
-}
-function oChkPh(){
-  const cnt=oPhotos.filter(function(p){return p;}).length;
-  const ok=cnt===4;
-  document.getElementById('obdg').classList.toggle('ok',ok);
-  document.getElementById('obdgtxt').textContent=ok?'¡Las 4 fotos están listas!':'Sube las 4 fotos para continuar ('+cnt+'/4)';
-  document.getElementById('obn2').disabled=!ok;
-}
-
-/* ── OWNER CATEGORY ── */
-function oSelC(k){
-  oSC=k;
-  document.querySelectorAll('.catc').forEach(function(c){c.classList.remove('sel');});
-  document.getElementById('cc-'+k).classList.add('sel');
-  const cat=CATS[k];
-  const sl=document.getElementById('ovsl');
-  sl.min=cat.min;sl.max=cat.max;sl.value=cat.min;
-  document.getElementById('ormin').textContent='$'+cat.min.toLocaleString();
-  document.getElementById('ormax').textContent='$'+cat.max.toLocaleString();
-  document.getElementById('ovsec').style.display='block';
-  oIV=cat.min;oUpdE(cat.min);
-}
-function oUpdE(v){
-  oIV=parseInt(v);
-  if(!oSC)return;
-  const cat=CATS[oSC];
-  const e=Math.round(oIV*(cat.mE/cat.max));
-  document.getElementById('ovn').textContent='$'+oIV.toLocaleString();
-  document.getElementById('oep').textContent='$'+e.toLocaleString();
-  document.getElementById('oem2').textContent='$'+(e*4).toLocaleString();
-  document.getElementById('obn1').disabled=false;
-}
-
-/* ── OWNER TERMS ── */
-function oChkS(){
-  if(oTR)return;
-  const el=document.getElementById('otbox');
-  if(el.scrollTop+el.clientHeight>=el.scrollHeight-10){
-    oTR=true;
-    document.getElementById('otbdg').classList.add('ok');
-    document.getElementById('ottxt').textContent='Leído — ya puedes aceptar';
-    document.getElementById('otf').style.opacity='0';
-    document.getElementById('ockw').classList.remove('lk');
-  }
-}
-function oEvCk(){
-  document.getElementById('obn3').disabled=!(document.getElementById('ock1').checked&&document.getElementById('ock2').checked);
-}
-
-/* ── OWNER CLABE ── */
-function oCLin(el){
-  const v=el.value.replace(/\D/g,'').substring(0,18);
-  el.value=v;
-  document.getElementById('obn3').disabled=true;
-  const bk=BANKS[v.substring(0,3)];
-  const bd=document.getElementById('obdet');
-  if(v.length>=3){bd.style.display='flex';document.getElementById('obnm').textContent=bk||'Banco no identificado';}
-  else{bd.style.display='none';}
-}
-function luhnCL(c){
-  if(!/^\d{18}$/.test(c))return false;
-  const w=[3,7,1,3,7,1,3,7,1,3,7,1,3,7,1,3,7];
-  const s=w.reduce(function(a,wi,i){return a+parseInt(c[i])*wi;},0);
-  return(10-(s%10))%10===parseInt(c[17]);
-}
-function oVCL(){
-  const v=document.getElementById('ocin').value.replace(/\D/g,'');
-  const err=document.getElementById('ocerr');
-  if(v.length!==18){err.textContent='La CLABE debe tener 18 dígitos';return;}
-  if(!luhnCL(v)){err.textContent='CLABE inválida — verifica el número';return;}
-  const name=document.getElementById('ocn').value.trim();
-  if(!name){err.textContent='Ingresa el nombre del titular';return;}
-  err.textContent='';oClV=v;
-  document.getElementById('oclf').style.display='none';
-  document.getElementById('oclok').style.display='flex';
-  const bk=BANKS[v.substring(0,3)]||'Banco';
-  document.getElementById('ochip').textContent=bk.split(' ')[0].substring(0,5).toUpperCase();
-  document.getElementById('ocmsk').textContent=v.substring(0,3)+' *** *** *** *** '+v.slice(-3);
-  document.getElementById('obn3').disabled=false;
-}
-function oChCL(){
-  oClV='';
-  document.getElementById('oclok').style.display='none';
-  document.getElementById('oclf').style.display='block';
-  document.getElementById('obn3').disabled=true;
-}
-
-/* ── OWNER SIGNATURE ── */
-async function oInitSig(){
-  const now=new Date();
-  oTs=now.toLocaleString('es-MX',{timeZone:'America/Mexico_City',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit'});
-  const cat=CATS[oSC]||{n:'—',mE:0,max:1};
-  const earn=Math.round(oIV*(cat.mE/cat.max));
-  document.getElementById('osn').textContent=document.getElementById('on').value||'—';
-  document.getElementById('osph').textContent=document.getElementById('oph').value||'—';
-  document.getElementById('osc').textContent=cat.n+' '+cat.e;
-  document.getElementById('osv').textContent='$'+oIV.toLocaleString()+' MXN';
-  document.getElementById('ose').textContent='$'+earn.toLocaleString()+' MXN';
-  const bk=BANKS[oClV.substring(0,3)]||'Banco';
-  document.getElementById('oscl').textContent=bk+' *** '+oClV.slice(-3);
-  document.getElementById('osts').textContent=oTs;
-  const raw=(document.getElementById('on').value||'')+oClV.substring(0,6)+(oSC||'')+oIV+oTs;
-  oHash=await sha256(raw);
-  document.getElementById('osh').textContent=oHash;
-  oCD={name:document.getElementById('on').value.trim(),cat:cat.n,val:oIV,earn:earn,ts:oTs,hash:oHash};
-  if(!oSCtx){oInitSC();}
-}
-function oInitSC(){
-  const c=document.getElementById('osigc');
-  oSCtx=c.getContext('2d');
-  oSCtx.strokeStyle='#1A1625';oSCtx.lineWidth=2;oSCtx.lineCap='round';oSCtx.lineJoin='round';
-  function pos(e){const r=c.getBoundingClientRect(),s=e.touches?e.touches[0]:e;return{x:(s.clientX-r.left)*(c.width/r.width),y:(s.clientY-r.top)*(c.height/r.height)};}
-  c.addEventListener('mousedown',function(e){oDrw=true;const p=pos(e);oSCtx.beginPath();oSCtx.moveTo(p.x,p.y);});
-  c.addEventListener('mousemove',function(e){if(!oDrw)return;const p=pos(e);oSCtx.lineTo(p.x,p.y);oSCtx.stroke();});
-  c.addEventListener('mouseup',function(){oDrw=false;oStr++;oEvS();});
-  c.addEventListener('touchstart',function(e){e.preventDefault();oDrw=true;const p=pos(e);oSCtx.beginPath();oSCtx.moveTo(p.x,p.y);},{passive:false});
-  c.addEventListener('touchmove',function(e){e.preventDefault();if(!oDrw)return;const p=pos(e);oSCtx.lineTo(p.x,p.y);oSCtx.stroke();},{passive:false});
-  c.addEventListener('touchend',function(e){e.preventDefault();oDrw=false;oStr++;oEvS();},{passive:false});
-}
-function oEvS(){
-  document.getElementById('osigh').textContent=oStr>=3?'✓ Firma registrada ('+oStr+' trazos)':oStr===0?'Firma en el recuadro':'Trazos: '+oStr;
-  oEvF();
-}
-function oClrS(){if(!oSCtx)return;oSCtx.clearRect(0,0,560,110);oStr=0;document.getElementById('osigh').textContent='Firma en el recuadro de arriba';oEvF();}
-function oEvF(){document.getElementById('obn4').disabled=!(document.getElementById('ofck').checked&&oStr>=3);}
-
-function oFin(){
-  const id='C2M-P-'+Date.now().toString(36).toUpperCase().slice(-8);
-  oCD.id=id;
-  document.getElementById('ocid').textContent=id;
-  document.getElementById('ocname').textContent=oCD.name;
-  document.getElementById('ocearn').textContent='$'+oCD.earn.toLocaleString()+' MXN';
-  oGo(6);
-  document.getElementById('oplbl').textContent='¡Prenda registrada!';
-  document.getElementById('oppct').textContent='100%';
-  document.getElementById('opf').style.width='100%';
-  document.getElementById('osaving').textContent='Guardando en base de datos...';
-  sbInsert('propietarios',{
-    nombre:oCD.name,
-    telefono:document.getElementById('oph').value.trim(),
-    correo:document.getElementById('oem').value.trim(),
-    instagram:document.getElementById('oig').value.trim()||null,
-    tiktok:document.getElementById('otk').value.trim()||null,
-    categoria:oCD.cat,
-    valor_declarado:oCD.val,
-    ganancia_estimada:oCD.earn,
-    clabe:oClV,
-    clabe_banco:document.getElementById('ochip').textContent,
-    firma_hash:oCD.hash,
-    contrato_id:oCD.id,
-    timestamp_firma:oCD.ts,
-    aceptacion_terminos:true,
-    aceptacion_imagen:true,
-    status:'pendiente_revision'
-  }).then(function(ok){
-    document.getElementById('osaving').textContent=ok?'✅ Registro guardado':'⚠️ Guardado localmente';
-  });
-}
-
-/* ── RENTER NAV ── */
-function rGo(n){
-  document.getElementById('rp'+rCur).classList.remove('on');
-  if(rCur<5){const t=document.getElementById('rt'+rCur);t.classList.remove('av','r');if(n>rCur)t.classList.add('done');else t.classList.remove('done');}
-  rCur=n;
-  document.getElementById('rp'+n).classList.add('on');
-  if(n<5){const t=document.getElementById('rt'+n);t.classList.remove('pend','done');t.classList.add('av','r');document.getElementById('rplbl').textContent=RSTEPS[n];document.getElementById('rppct').textContent=PCTS[n];document.getElementById('rpf').style.width=PCTS[n];}
-  if(n===3){rInitSig();}
-  if(n===4){rBuildSum();}
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-
-/* ── RENTER ID ── */
-function rVCURP(){
-  const v=document.getElementById('rcurp').value.toUpperCase().trim();
-  document.getElementById('rcurp').value=v;
-  const ok=/^[A-Z]{4}[0-9]{6}[HM][A-Z]{5}[A-Z0-9][0-9]$/.test(v);
-  document.getElementById('rcst').innerHTML=ok?'<span class="pill pill-ok">✓ CURP válida</span>':'<span style="font-size:10.5px;color:#8B2020">Formato inválido — revisa los 18 caracteres</span>';
-}
-
-/* ── RENTER TERMS ── */
-function rChkS(){
-  if(rTR)return;
-  const el=document.getElementById('rtbox');
-  if(el.scrollTop+el.clientHeight>=el.scrollHeight-10){
-    rTR=true;
-    document.getElementById('rtbdg').classList.add('ok');
-    document.getElementById('rttxt').textContent='Leído — ya puedes aceptar';
-    document.getElementById('rtf').style.opacity='0';
-    document.getElementById('rckw').classList.remove('lk');
-  }
-}
-function rEvCk(){
-  const ok=['rc1','rc2','rc3','rc4','rc5','rc6'].every(function(id){return document.getElementById(id).checked;});
-  document.getElementById('rbn1').disabled=!ok;
-}
-
-/* ── RENTER PAYMENT ── */
-function fmtC(el){let v=el.value.replace(/\D/g,'').substring(0,16);el.value=v.replace(/(.{4})/g,'$1 ').trim();}
-function fmtE(el){let v=el.value.replace(/\D/g,'').substring(0,4);if(v.length>=2)v=v.slice(0,2)+' / '+v.slice(2);el.value=v;}
-function luhn(n){const d=n.replace(/\D/g,'').split('').reverse();let s=0;for(let i=0;i<d.length;i++){let x=parseInt(d[i]);if(i%2===1){x*=2;if(x>9)x-=9;}s+=x;}return s%10===0;}
-function rVDemo(){
-  const name=document.getElementById('rdh').value.trim();
-  const num=document.getElementById('rdc').value.replace(/\s/g,'');
-  const exp=document.getElementById('rde').value;
-  const cvc=document.getElementById('rdcv').value;
-  const err=document.getElementById('rderr');
-  if(!name){err.textContent='Ingresa el nombre del titular';return;}
-  if(num.length<13||!luhn(num)){err.textContent='Número de tarjeta inválido';return;}
-  if(!exp.match(/\d{2}\s*\/\s*\d{2}/)){err.textContent='Vencimiento inválido';return;}
-  if(cvc.length<3){err.textContent='CVC inválido';return;}
-  err.textContent='';
-  rPI='pm_sim_'+Math.random().toString(36).substring(2,12);
-  rL4=num.slice(-4);
-  const f=num[0];
-  rBr=f==='4'?'visa':f==='5'?'mastercard':f==='3'?'amex':'card';
-  document.getElementById('rdf').style.display='none';
-  document.getElementById('rcvr').style.display='flex';
-  const br={visa:'VISA',mastercard:'MC',amex:'AMEX',card:'CARD'};
-  document.getElementById('rbch').textContent=br[rBr]||rBr.toUpperCase();
-  document.getElementById('rl4').textContent=rL4;
-  document.getElementById('rbn2').disabled=false;
-}
-function rChC(){
-  rPI=null;rL4=null;rBr=null;
-  document.getElementById('rcvr').style.display='none';
-  document.getElementById('rdf').style.display='block';
-  document.getElementById('rbn2').disabled=true;
-}
-
-/* ── RENTER SIGNATURE ── */
-function rInitSig(){
-  const now=new Date();
-  rTs=now.toLocaleString('es-MX',{timeZone:'America/Mexico_City',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit'});
-  document.getElementById('rtsv').textContent=rTs;
-  const ua=navigator.userAgent;
-  let p='Navegador';
-  if(/iPhone|iPad/.test(ua))p='iOS';else if(/Android/.test(ua))p='Android';else if(/Chrome/.test(ua))p='Chrome';
-  document.getElementById('ruav').textContent=p;
-  if(!rSCtx){rInitSC();}
-}
-function rInitSC(){
-  const c=document.getElementById('rsigc');
-  rSCtx=c.getContext('2d');
-  rSCtx.strokeStyle='#1A1625';rSCtx.lineWidth=2;rSCtx.lineCap='round';rSCtx.lineJoin='round';
-  function pos(e){const r=c.getBoundingClientRect(),s=e.touches?e.touches[0]:e;return{x:(s.clientX-r.left)*(c.width/r.width),y:(s.clientY-r.top)*(c.height/r.height)};}
-  c.addEventListener('mousedown',function(e){rDrw=true;const p=pos(e);rSCtx.beginPath();rSCtx.moveTo(p.x,p.y);});
-  c.addEventListener('mousemove',function(e){if(!rDrw)return;const p=pos(e);rSCtx.lineTo(p.x,p.y);rSCtx.stroke();});
-  c.addEventListener('mouseup',function(){rDrw=false;rStr++;rEvS();});
-  c.addEventListener('touchstart',function(e){e.preventDefault();rDrw=true;const p=pos(e);rSCtx.beginPath();rSCtx.moveTo(p.x,p.y);},{passive:false});
-  c.addEventListener('touchmove',function(e){e.preventDefault();if(!rDrw)return;const p=pos(e);rSCtx.lineTo(p.x,p.y);rSCtx.stroke();},{passive:false});
-  c.addEventListener('touchend',function(e){e.preventDefault();rDrw=false;rStr++;rEvS();},{passive:false});
-}
-function rEvS(){
-  document.getElementById('rsigh').textContent=rStr>=3?'✓ Firma registrada ('+rStr+' trazos)':rStr===0?'Firma en el recuadro':'Trazos: '+rStr;
-  document.getElementById('rbn3').disabled=rStr<3;
-}
-function rClrS(){if(!rSCtx)return;rSCtx.clearRect(0,0,560,110);rStr=0;document.getElementById('rsigh').textContent='Firma en el recuadro de arriba';document.getElementById('rbn3').disabled=true;}
-
-/* ── RENTER SUMMARY ── */
-async function rBuildSum(){
-  const n=document.getElementById('rn').value.trim()||'—';
-  const c=document.getElementById('rcurp').value.toUpperCase().trim()||'—';
-  const e=document.getElementById('rem').value.trim()||'—';
-  const t=document.getElementById('rtel').value.trim()||'—';
-  document.getElementById('rsn').textContent=n;
-  document.getElementById('rsc').textContent=c;
-  document.getElementById('rse').textContent=e;
-  document.getElementById('rst').textContent=t;
-  document.getElementById('rsts').textContent=rTs;
-  const bn={visa:'Visa',mastercard:'Mastercard',amex:'Amex',card:'Tarjeta'}[rBr]||'Tarjeta';
-  document.getElementById('rsp').innerHTML='<span class="pill pill-ok">'+bn+' &bull;&bull;&bull;&bull; '+(rL4||'????')+'</span>';
-  rHash=await sha256(n+c+e+rTs+(rPI||''));
-  document.getElementById('rsh').textContent=rHash;
-  rCD={nombre:n,curp:c,ts:rTs,hash:rHash};
-}
-function rEvF(){document.getElementById('rbn4').disabled=!document.getElementById('rfck').checked;}
-
-function rFin(){
-  const id='C2M-R-'+Date.now().toString(36).toUpperCase().slice(-8);
-  rCD.id=id;
-  document.getElementById('rcid').textContent=id;
-  document.getElementById('rcname').textContent=rCD.nombre;
-  document.getElementById('rcts').textContent=rCD.ts;
-  rGo(5);
-  document.getElementById('rplbl').textContent='¡Contrato firmado!';
-  document.getElementById('rppct').textContent='100%';
-  document.getElementById('rpf').style.width='100%';
-  document.getElementById('rsaving').textContent='Guardando en base de datos...';
-  sbInsert('renteros',{
-    nombre:rCD.nombre,
-    curp:document.getElementById('rcurp').value.toUpperCase().trim(),
-    correo:document.getElementById('rem').value.trim(),
-    telefono:document.getElementById('rtel').value.trim(),
-    fecha_nacimiento:document.getElementById('rdob').value||null,
-    tipo_id:document.getElementById('rtid').value||null,
-    stripe_payment_method:rPI,
-    card_brand:rBr,
-    card_last4:rL4,
-    firma_hash:rCD.hash,
-    contrato_id:rCD.id,
-    timestamp_firma:rCD.ts,
-    clausulas_aceptadas:6,
-    status:'activo'
-  }).then(function(ok){
-    document.getElementById('rsaving').textContent=ok?'✅ Registro guardado':'⚠️ Guardado localmente';
-  });
-}
-</script>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="es"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1">&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1">&lt;meta name="viewport" content="width=device-width,initial-scale=1"&gt;</p>
+<p class="p1">&lt;title&gt;closet2me&lt;/title&gt;</p>
+<p class="p1">&lt;link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&amp;family=DM+Sans:wght@400;500;600&amp;family=DM+Mono&amp;display=swap" rel="stylesheet"&gt;</p>
+<p class="p1">&lt;script src="https://js.stripe.com/v3/"&gt;&lt;/script&gt;</p>
+<p class="p1">&lt;style&gt;</p>
+<p class="p1">:root{</p>
+<p class="p1"><span class="Apple-converted-space">  </span>--p:#2D1B6B;--pm:#4A2D9C;--pp:#EDE8F8;--ac:#C8A95A;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>--g:#2D7A5A;--gl:#E6F4EE;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>--ink:#1A1625;--im:#4A4560;--il:#8C87A0;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>--sf:#FAFAF8;--s2:#F2F0F7;--w:#fff;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>--bd:rgba(45,27,107,.12);--bs:rgba(45,27,107,.22);</p>
+<p class="p1">}</p>
+<p class="p1">*{box-sizing:border-box;margin:0;padding:0}</p>
+<p class="p1">body{font-family:'DM Sans',sans-serif;background:var(--sf);color:var(--ink);min-height:100vh}</p>
+<p class="p1">.hdr{position:sticky;top:0;z-index:99;background:rgba(250,250,248,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--bd);height:52px;padding:0 1.25rem;display:flex;align-items:center;justify-content:space-between}</p>
+<p class="p1">.logo{font-family:'DM Serif Display',serif;font-size:20px;color:var(--p);letter-spacing:-.5px}</p>
+<p class="p1">.hbg{font-size:11px;padding:4px 11px;border-radius:20px;font-weight:500;transition:all .3s}</p>
+<p class="p1">.hbg.n{background:var(--s2);color:var(--il)}</p>
+<p class="p1">.hbg.o{background:var(--pp);color:var(--pm)}</p>
+<p class="p1">.hbg.r{background:var(--gl);color:var(--g)}</p>
+<p class="p1">.wrap{max-width:600px;margin:0 auto;padding:1.5rem 1rem 3rem}</p>
+<p class="p1">.sc{display:none}.sc.on{display:block}</p>
+<p class="p1">.pg{display:none}.pg.on{display:block;animation:up .25s ease}</p>
+<p class="p1">@keyframes up{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}</p>
+<p class="p2"><br></p>
+<p class="p1">/* LANDING */</p>
+<p class="p1">.hero{text-align:center;padding:2rem 0 1.5rem}</p>
+<p class="p1">.hero h1{font-family:'DM Serif Display',serif;font-size:48px;color:var(--p);letter-spacing:-2px;line-height:.9;margin-bottom:.75rem}</p>
+<p class="p1">.hero h1 em{font-style:italic;color:var(--ac)}</p>
+<p class="p1">.hero p{color:var(--il);font-size:14px}</p>
+<p class="p1">.rgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:1.5rem}</p>
+<p class="p1">.rc{background:var(--w);border-radius:14px;padding:1.5rem 1.1rem;border:2px solid var(--bd);cursor:pointer;transition:all .2s}</p>
+<p class="p1">.rc:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(45,27,107,.12)}</p>
+<p class="p1">.rc.o:hover{border-color:var(--pm)}.rc.r:hover{border-color:var(--g)}</p>
+<p class="p1">.rc .em{font-size:36px;display:block;margin-bottom:10px}</p>
+<p class="p1">.rc h2{font-family:'DM Serif Display',serif;font-size:19px;margin-bottom:5px}</p>
+<p class="p1">.rc.o h2{color:var(--p)}.rc.r h2{color:var(--g)}</p>
+<p class="p1">.rc p{font-size:12px;color:var(--il);line-height:1.5;margin-bottom:13px}</p>
+<p class="p1">.rc ul{list-style:none;margin-bottom:16px}</p>
+<p class="p1">.rc ul li{font-size:11.5px;color:var(--im);padding:4px 0;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:6px}</p>
+<p class="p1">.rc ul li:last-child{border:none}</p>
+<p class="p1">.rc ul li::before{content:'<span class="s1">✓</span>';font-weight:700;font-size:10px}</p>
+<p class="p1">.rc.o li::before{color:var(--pm)}.rc.r li::before{color:var(--g)}</p>
+<p class="p1">.rbtn{width:100%;padding:10px;border-radius:9px;font-size:13px;font-weight:600;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .15s}</p>
+<p class="p1">.rc.o .rbtn{background:var(--p);color:#fff}.rc.o .rbtn:hover{background:var(--pm)}</p>
+<p class="p1">.rc.r .rbtn{background:var(--g);color:#fff}.rc.r .rbtn:hover{background:#1e5c40}</p>
+<p class="p1">.trust{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:1.25rem}</p>
+<p class="p1">.trust span{font-size:10.5px;color:var(--il)}</p>
+<p class="p2"><br></p>
+<p class="p1">/* PROGRESS */</p>
+<p class="p1">.prog{margin-bottom:1.5rem}</p>
+<p class="p1">.ph{display:flex;justify-content:space-between;margin-bottom:8px}</p>
+<p class="p1">.pl{font-size:12.5px;font-weight:500;color:var(--im)}</p>
+<p class="p1">.pp{font-size:11px;color:var(--il);font-family:'DM Mono',monospace}</p>
+<p class="p1">.pb{height:3px;background:var(--s2);border-radius:3px;overflow:hidden}</p>
+<p class="p1">.pf{height:100%;border-radius:3px;transition:width .35s}</p>
+<p class="p1">.pf.o{background:linear-gradient(90deg,var(--p),var(--ac))}</p>
+<p class="p1">.pf.r{background:linear-gradient(90deg,var(--g),var(--pm))}</p>
+<p class="p2"><br></p>
+<p class="p1">/* TABS */</p>
+<p class="p1">.tabs{display:flex;gap:5px;margin-bottom:1.5rem;overflow-x:auto;padding-bottom:3px;scrollbar-width:none}</p>
+<p class="p1">.tabs::-webkit-scrollbar{display:none}</p>
+<p class="p1">.tab{display:flex;align-items:center;gap:5px;padding:5px 11px;border-radius:20px;font-size:11.5px;font-weight:500;white-space:nowrap;border:1px solid transparent;flex-shrink:0}</p>
+<p class="p1">.tab.pend{background:var(--s2);color:var(--il)}</p>
+<p class="p1">.tab.done{background:var(--gl);color:var(--g)}</p>
+<p class="p1">.tab.av.o{background:var(--pp);color:var(--p);border-color:rgba(74,45,156,.2)}</p>
+<p class="p1">.tab.av.r{background:var(--gl);color:var(--g);border-color:rgba(45,122,90,.2)}</p>
+<p class="p1">.tn{width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-family:'DM Mono',monospace;flex-shrink:0}</p>
+<p class="p1">.tab.pend .tn{background:var(--il);color:#fff}</p>
+<p class="p1">.tab.done .tn{background:var(--g);color:#fff}</p>
+<p class="p1">.tab.av.o .tn{background:var(--p);color:#fff}</p>
+<p class="p1">.tab.av.r .tn{background:var(--g);color:#fff}</p>
+<p class="p2"><br></p>
+<p class="p1">/* CARD */</p>
+<p class="p1">.card{background:var(--w);border:1px solid var(--bd);border-radius:12px;padding:1.25rem;margin-bottom:.85rem;box-shadow:0 2px 12px rgba(45,27,107,.06)}</p>
+<p class="p1">.ch{display:flex;align-items:center;gap:9px;margin-bottom:1rem;padding-bottom:.85rem;border-bottom:1px solid var(--bd)}</p>
+<p class="p1">.ci{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0}</p>
+<p class="p1">.ci.p{background:var(--pp)}.ci.p svg{color:var(--p)}</p>
+<p class="p1">.ci.g{background:var(--gl)}.ci.g svg{color:var(--g)}</p>
+<p class="p1">.ci svg{width:16px;height:16px}</p>
+<p class="p1">.ct{font-size:13.5px;font-weight:600;color:var(--ink)}</p>
+<p class="p1">.cs{font-size:11px;color:var(--il);margin-top:1px}</p>
+<p class="p2"><br></p>
+<p class="p1">/* FORM */</p>
+<p class="p1">.fg{display:grid;grid-template-columns:1fr 1fr;gap:10px}</p>
+<p class="p1">.ff{grid-column:1/-1}</p>
+<p class="p1">.f{display:flex;flex-direction:column;gap:4px}</p>
+<p class="p1">.f label{font-size:10px;font-weight:600;color:var(--im);letter-spacing:.04em;text-transform:uppercase}</p>
+<p class="p1">.f input,.f select{height:40px;padding:0 11px;border:1px solid var(--bs);border-radius:7px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--ink);background:var(--w);outline:none;width:100%;transition:all .15s}</p>
+<p class="p1">.f input:focus,.f select:focus{border-color:var(--pm);box-shadow:0 0 0 3px rgba(74,45,156,.1)}</p>
+<p class="p1">.f input::placeholder{color:var(--il)}</p>
+<p class="p1">.igr{display:flex;align-items:center;border:1px solid var(--bs);border-radius:7px;overflow:hidden;background:var(--w);transition:all .15s}</p>
+<p class="p1">.igr:focus-within{border-color:var(--pm);box-shadow:0 0 0 3px rgba(74,45,156,.1)}</p>
+<p class="p1">.igpfx{padding:0 9px;font-size:12px;color:var(--il);background:var(--s2);height:40px;display:flex;align-items:center;border-right:1px solid var(--bs);white-space:nowrap}</p>
+<p class="p1">.igr input{border:none!important;box-shadow:none!important;flex:1;height:40px}</p>
+<p class="p1">.cpr{display:flex;gap:7px}</p>
+<p class="p1">.cpr input{flex:1;text-transform:uppercase;font-family:'DM Mono',monospace;letter-spacing:.05em}</p>
+<p class="p2"><br></p>
+<p class="p1">/* CATEGORY */</p>
+<p class="p1">.catg{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}</p>
+<p class="p1">.catc{border:1.5px solid var(--bd);border-radius:10px;padding:10px 5px;text-align:center;cursor:pointer;transition:all .2s;background:var(--w)}</p>
+<p class="p1">.catc:hover{border-color:var(--pm);background:var(--pp)}</p>
+<p class="p1">.catc.sel{border-color:var(--p);background:var(--pp);box-shadow:0 0 0 3px rgba(74,45,156,.1)}</p>
+<p class="p1">.ce{font-size:22px;margin-bottom:4px}</p>
+<p class="p1">.cn{font-size:10px;font-weight:600;color:var(--ink)}</p>
+<p class="p1">.cen{font-size:9px;color:var(--g);font-weight:600}</p>
+<p class="p1">.vsec{border:1px solid var(--bd);border-radius:10px;padding:.9rem 1rem;background:var(--s2);margin-top:10px}</p>
+<p class="p1">.vlbl{font-size:10px;font-weight:600;color:var(--im);text-transform:uppercase;letter-spacing:.04em;margin-bottom:7px}</p>
+<p class="p1">.vrow{display:flex;align-items:center;gap:10px;margin-bottom:8px}</p>
+<p class="p1">.vnum{font-family:'DM Serif Display',serif;font-size:28px;color:var(--p);min-width:70px}</p>
+<p class="p1">input[type=range]{flex:1;accent-color:var(--p);height:4px;cursor:pointer}</p>
+<p class="p1">.rlbls{display:flex;justify-content:space-between;font-size:9px;color:var(--il);margin-bottom:10px;font-family:'DM Mono',monospace}</p>
+<p class="p1">.egrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}</p>
+<p class="p1">.ec{background:var(--w);border:1px solid var(--bd);border-radius:7px;padding:9px 10px}</p>
+<p class="p1">.elbl{font-size:9px;color:var(--il);text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px}</p>
+<p class="p1">.eval{font-size:17px;font-weight:600;color:var(--g)}</p>
+<p class="p1">.esub{font-size:9px;color:var(--il)}</p>
+<p class="p1">.nb{background:var(--pp);border-left:3px solid var(--pm);border-radius:0 7px 7px 0;padding:8px 11px;font-size:11.5px;color:var(--p);line-height:1.6;margin-top:9px}</p>
+<p class="p2"><br></p>
+<p class="p1">/* TERMS */</p>
+<p class="p1">.twrap{position:relative}</p>
+<p class="p1">.tbox{height:240px;overflow-y:auto;border:1px solid var(--bs);border-radius:7px;padding:1rem;font-size:12px;line-height:1.75;color:var(--im);background:var(--sf)}</p>
+<p class="p1">.tbox::-webkit-scrollbar{width:3px}</p>
+<p class="p1">.tbox::-webkit-scrollbar-thumb{background:var(--pm);border-radius:3px}</p>
+<p class="p1">.tbox h3{font-family:'DM Serif Display',serif;font-size:13px;color:var(--p);margin:1rem 0 .4rem;padding-bottom:3px;border-bottom:1px solid var(--bd)}</p>
+<p class="p1">.tbox h3:first-child{margin-top:0}</p>
+<p class="p1">.tbox p{margin-bottom:.55rem}</p>
+<p class="p1">.tbox ul{padding-left:1.1rem;margin-bottom:.55rem}</p>
+<p class="p1">.tbox ul li{margin-bottom:.25rem}</p>
+<p class="p1">.tbox strong{color:var(--ink);font-weight:600}</p>
+<p class="p1">.tbox table{width:100%;border-collapse:collapse;font-size:11px;margin:6px 0 10px}</p>
+<p class="p1">.tbox table th{text-align:left;padding:5px 7px;background:rgba(45,27,107,.07);font-weight:600;color:var(--p);font-size:10px;text-transform:uppercase}</p>
+<p class="p1">.tbox table th:not(:first-child){text-align:right}</p>
+<p class="p1">.tbox table td{padding:4px 7px;border-bottom:1px solid var(--bd)}</p>
+<p class="p1">.tbox table td:not(:first-child){text-align:right;font-family:'DM Mono',monospace}</p>
+<p class="p1">.hook{background:var(--pp);border-radius:7px;padding:.75rem .9rem;margin-bottom:1rem;font-size:12px;color:var(--pm);line-height:1.65;border-left:3px solid var(--pm)}</p>
+<p class="p1">.tf{position:absolute;bottom:0;left:0;right:0;height:40px;background:linear-gradient(transparent,var(--sf));pointer-events:none;border-radius:0 0 7px 7px;transition:opacity .3s}</p>
+<p class="p1">.tbdg{display:flex;align-items:center;gap:7px;margin-top:8px;padding:8px 12px;border-radius:7px;font-size:11.5px;font-weight:500;border:1px solid var(--bd);background:var(--s2);color:var(--il);transition:all .3s}</p>
+<p class="p1">.tbdg.ok{background:var(--gl);color:var(--g);border-color:rgba(45,122,90,.2)}</p>
+<p class="p1">.tbdg svg{width:14px;height:14px;flex-shrink:0}</p>
+<p class="p1">.ckw{transition:opacity .3s}.ckw.lk{opacity:.4;pointer-events:none}</p>
+<p class="p1">.cki{display:flex;gap:10px;padding:11px 0;border-bottom:1px solid var(--bd);align-items:flex-start}</p>
+<p class="p1">.cki:last-child{border:none;padding-bottom:0}</p>
+<p class="p1">.cki input[type=checkbox]{width:16px;height:16px;accent-color:var(--p);flex-shrink:0;margin-top:2px;cursor:pointer}</p>
+<p class="p1">.ckt{font-size:12.5px;color:var(--ink);line-height:1.55}</p>
+<p class="p1">.cks{font-size:10.5px;color:var(--il);margin-top:3px}</p>
+<p class="p2"><br></p>
+<p class="p1">/* PAYMENT */</p>
+<p class="p1">.mn{display:flex;align-items:flex-start;gap:9px;padding:10px 12px;border-radius:7px;font-size:11.5px;line-height:1.6;margin-bottom:12px;border:1px solid;background:#FFF8E6;border-color:rgba(200,150,50,.35);color:#7A5C10}</p>
+<p class="p1">.mn svg{width:14px;height:14px;flex-shrink:0;margin-top:2px}</p>
+<p class="p1">.mn code{font-family:'DM Mono',monospace;font-size:10px;background:rgba(0,0,0,.07);padding:1px 4px;border-radius:3px}</p>
+<p class="p1">.dgr{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}</p>
+<p class="p1">.cvr{display:flex;align-items:center;gap:12px;background:var(--gl);border:1px solid rgba(45,122,90,.2);border-radius:10px;padding:.9rem 1.1rem}</p>
+<p class="p1">.bch{height:26px;padding:0 9px;border-radius:4px;background:var(--pp);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--p);text-transform:uppercase;font-family:'DM Mono',monospace;flex-shrink:0}</p>
+<p class="p1">.sbdgs{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}</p>
+<p class="p1">.sbdg{font-size:9.5px;color:var(--il);background:var(--s2);padding:3px 9px;border-radius:20px;border:1px solid var(--bd)}</p>
+<p class="p1">#payment-element{min-height:80px;margin-bottom:4px}</p>
+<p class="p2"><br></p>
+<p class="p1">/* CLABE */</p>
+<p class="p1">.clrow{display:flex;gap:7px}</p>
+<p class="p1">.clrow input{flex:1;font-family:'DM Mono',monospace;font-size:15px;letter-spacing:.08em;text-align:center;height:46px;border:1.5px solid var(--bs);border-radius:7px;outline:none;color:var(--ink);background:var(--w);transition:all .15s}</p>
+<p class="p1">.clrow input:focus{border-color:var(--pm);box-shadow:0 0 0 3px rgba(74,45,156,.1)}</p>
+<p class="p1">.bdet{display:none;align-items:center;gap:7px;margin-top:7px;font-size:11.5px;color:var(--im)}</p>
+<p class="p1">.bdot{width:7px;height:7px;border-radius:50%;background:var(--pm);flex-shrink:0}</p>
+<p class="p1">.clok{display:none;align-items:center;gap:12px;background:var(--gl);border:1px solid rgba(45,122,90,.2);border-radius:10px;padding:.9rem 1.1rem}</p>
+<p class="p1">.clinfo .ct2{font-weight:600;font-size:13.5px;color:var(--g)}</p>
+<p class="p1">.clinfo .cs2{font-size:11px;color:var(--im);font-family:'DM Mono',monospace;margin-top:2px}</p>
+<p class="p2"><br></p>
+<p class="p1">/* SIGNATURE */</p>
+<p class="p1">.sigc{width:100%;height:110px;border:1px solid var(--bs);border-radius:7px;cursor:crosshair;background:#FDFCFE;display:block;touch-action:none}</p>
+<p class="p1">.sigh{display:flex;justify-content:space-between;align-items:center;margin-top:5px;font-size:10.5px;color:var(--il)}</p>
+<p class="p1">.tsr{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--bd);font-size:12.5px}</p>
+<p class="p1">.tsr:last-child{border:none}</p>
+<p class="p2"><br></p>
+<p class="p1">/* SUMMARY */</p>
+<p class="p1">.sr{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--bd);font-size:12.5px}</p>
+<p class="p1">.sr:last-child{border:none}</p>
+<p class="p1">.sl{color:var(--il)}.sv{color:var(--ink);font-weight:500;text-align:right;max-width:62%}</p>
+<p class="p1">.sv.mono{font-family:'DM Mono',monospace;font-size:10.5px}</p>
+<p class="p1">.hb{background:var(--s2);border-radius:7px;padding:9px 10px;font-family:'DM Mono',monospace;font-size:9.5px;color:var(--il);word-break:break-all;line-height:1.6;margin-top:5px}</p>
+<p class="p2"><br></p>
+<p class="p1">/* BUTTONS */</p>
+<p class="p1">.pill{display:inline-flex;align-items:center;gap:3px;padding:3px 8px;border-radius:20px;font-size:10.5px;font-weight:600}</p>
+<p class="p1">.pill-ok{background:var(--gl);color:var(--g)}</p>
+<p class="p1">.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:7px;font-size:13.5px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;border:1px solid var(--bs);background:transparent;color:var(--ink);transition:all .15s}</p>
+<p class="p1">.btn:hover{background:var(--s2)}</p>
+<p class="p1">.btn svg{width:15px;height:15px}</p>
+<p class="p1">.btnp{background:var(--p);color:#fff;border-color:var(--p)}</p>
+<p class="p1">.btnp:hover{background:var(--pm)}</p>
+<p class="p1">.btnp.g{background:var(--g);border-color:var(--g)}</p>
+<p class="p1">.btnp.g:hover{background:#1e5c40}</p>
+<p class="p1">.btnp:disabled{opacity:.38;cursor:not-allowed}</p>
+<p class="p1">.btns{padding:5px 11px;font-size:11.5px;border-radius:7px;border:1px solid var(--bs);background:transparent;color:var(--im);cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;display:inline-flex;align-items:center;gap:4px}</p>
+<p class="p1">.btns svg{width:12px;height:12px}</p>
+<p class="p1">.vbtn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:11px;border-radius:7px;font-size:14px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;border:none;background:var(--p);color:#fff;margin-top:12px}</p>
+<p class="p1">.vbtn.g{background:var(--g)}</p>
+<p class="p1">.vbtn:disabled{opacity:.5;cursor:wait}</p>
+<p class="p1">.errmsg{font-size:10.5px;color:#8B2020;margin-top:5px;min-height:15px}</p>
+<p class="p1">.nav{display:flex;justify-content:space-between;align-items:center;margin-top:1rem}</p>
+<p class="p1">.bl{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--il);cursor:pointer;margin-bottom:1rem}</p>
+<p class="p1">.bl svg{width:12px;height:12px}</p>
+<p class="p1">.sh{font-family:'DM Serif Display',serif;font-size:21px;color:var(--ink);margin-bottom:.2rem}</p>
+<p class="p1">.sd{font-size:12.5px;color:var(--il);margin-bottom:1rem}</p>
+<p class="p1">.saving{font-size:11px;color:var(--il);text-align:center;margin-top:8px}</p>
+<p class="p2"><br></p>
+<p class="p1">/* SUCCESS */</p>
+<p class="p1">.sucw{text-align:center;padding:1.75rem 1rem}</p>
+<p class="p1">.sring{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem}</p>
+<p class="p1">.sring.o{background:var(--pp);border:2px solid rgba(74,45,156,.2)}</p>
+<p class="p1">.sring.o svg{color:var(--p)}</p>
+<p class="p1">.sring.r{background:var(--gl);border:2px solid rgba(45,122,90,.2)}</p>
+<p class="p1">.sring.r svg{color:var(--g)}</p>
+<p class="p1">.sring svg{width:28px;height:28px}</p>
+<p class="p1">.stit{font-family:'DM Serif Display',serif;font-size:24px;color:var(--ink);margin-bottom:.4rem}</p>
+<p class="p1">.ssub{font-size:13px;color:var(--il);line-height:1.65;max-width:380px;margin:0 auto}</p>
+<p class="p1">.cmeta{background:var(--s2);border-radius:8px;padding:.9rem 1rem;margin:1rem 0 0}</p>
+<p class="p2"><br></p>
+<p class="p1">@media(max-width:480px){.fg,.dgr,.egrid{grid-template-columns:1fr}.ff{grid-column:1}.catg{grid-template-columns:repeat(3,1fr)}.rgrid{grid-template-columns:1fr}}</p>
+<p class="p1">&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p1">&lt;header class="hdr"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="logo"&gt;closet2me&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="hbg n" id="hbg"&gt;Elige tu rol&lt;/div&gt;</p>
+<p class="p1">&lt;/header&gt;</p>
+<p class="p1">&lt;div class="wrap"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- LANDING --&gt;</p>
+<p class="p1">&lt;div class="sc on" id="sc-land"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="hero"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h1&gt;Renta.&lt;br&gt;&lt;em&gt;Stylea.&lt;/em&gt;&lt;br&gt;Repite.&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;p&gt;¿Cómo quieres participar hoy?&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="rgrid"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="rc o" onclick="selRol('owner')"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;span class="em"&gt;<span class="s2">👗</span>&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;h2&gt;Soy propietario&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;p&gt;Pon a trabajar tu guardarropa y genera ingresos reales.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;ul&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;li&gt;Gana hasta &lt;strong&gt;$274 por renta&lt;/strong&gt;&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;li&gt;3 días · SPEI a tu CLABE&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;li&gt;closet2me gestiona todo&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;li&gt;Firma digital + contrato&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/ul&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="rbtn"&gt;Registrar mi prenda <span class="s1">→</span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="rc r" onclick="selRol('renter')"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;span class="em"&gt;<span class="s2">✨</span>&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;h2&gt;Quiero rentar&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;p&gt;Accede a looks increíbles sin comprar ni acumular.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;ul&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;li&gt;Prendas de &lt;strong&gt;$250 a $1,600&lt;/strong&gt;&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;li&gt;3 días · depósito sin cobro&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;li&gt;Pago seguro con Stripe&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;li&gt;Firma digital + contrato&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/ul&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="rbtn"&gt;Quiero rentar <span class="s1">→</span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="trust"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;span&gt;<span class="s2">🔒</span> TLS · PCI DSS&lt;/span&gt;&lt;span&gt;<span class="s2">⚡</span> Stripe&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;span&gt;<span class="s2">📄</span> Firma LFEA&lt;/span&gt;&lt;span&gt;<span class="s2">🇲🇽</span> Guanajuato&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- OWNER FLOW --&gt;</p>
+<p class="p1">&lt;div class="sc" id="sc-owner"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="prog"&gt;&lt;div class="ph"&gt;&lt;span class="pl" id="oplbl"&gt;Paso 1 de 5&lt;/span&gt;&lt;span class="pp" id="oppct"&gt;20%&lt;/span&gt;&lt;/div&gt;&lt;div class="pb"&gt;&lt;div class="pf o" id="opf" style="width:20%"&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="tabs"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="tab av o" id="ot0"&gt;&lt;span class="tn"&gt;1&lt;/span&gt;Perfil&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="tab pend" id="ot1"&gt;&lt;span class="tn"&gt;2&lt;/span&gt;Prenda&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="tab pend" id="ot2"&gt;&lt;span class="tn"&gt;3&lt;/span&gt;Fotos&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="tab pend" id="ot3"&gt;&lt;span class="tn"&gt;4&lt;/span&gt;Términos&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="tab pend" id="ot4"&gt;&lt;span class="tn"&gt;5&lt;/span&gt;CLABE&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="tab pend" id="ot5"&gt;&lt;span class="tn"&gt;6&lt;/span&gt;Firma&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="pg on" id="op0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="bl" onclick="backLand()"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;path d="M19 12H5M12 19l-7-7 7-7"/&gt;&lt;/svg&gt;Cambiar rol&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h2 class="sh"&gt;Tu perfil de propietario&lt;/h2&gt;&lt;p class="sd"&gt;Las redes son opcionales pero aumentan tu visibilidad.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="ch"&gt;&lt;div class="ci p"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"&gt;&lt;path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/&gt;&lt;circle cx="12" cy="7" r="4"/&gt;&lt;/svg&gt;&lt;/div&gt;&lt;div&gt;&lt;div class="ct"&gt;Datos de contacto&lt;/div&gt;&lt;div class="cs"&gt;Nombre y teléfono requeridos&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="fg"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="f ff"&gt;&lt;label&gt;Nombre completo&lt;/label&gt;&lt;input type="text" id="on" placeholder="Tu nombre"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="f"&gt;&lt;label&gt;Teléfono&lt;/label&gt;&lt;input type="tel" id="oph" placeholder="+52 xxx xxx xxxx"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="f"&gt;&lt;label&gt;Correo&lt;/label&gt;&lt;input type="email" id="oem" placeholder="correo@ejemplo.com"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="f"&gt;&lt;label&gt;Instagram&lt;/label&gt;&lt;div class="igr"&gt;&lt;span class="igpfx"&gt;@&lt;/span&gt;&lt;input type="text" id="oig" placeholder="usuario"&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="f"&gt;&lt;label&gt;TikTok&lt;/label&gt;&lt;div class="igr"&gt;&lt;span class="igpfx"&gt;@&lt;/span&gt;&lt;input type="text" id="otk" placeholder="usuario"&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="nav"&gt;&lt;div&gt;&lt;/div&gt;&lt;button class="btn btnp" onclick="oGo(1)"&gt;Continuar &lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;path d="M5 12h14M12 5l7 7-7 7"/&gt;&lt;/svg&gt;&lt;/button&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="pg" id="op1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h2 class="sh"&gt;Tu prenda&lt;/h2&gt;&lt;p class="sd"&gt;Elige categoría y declara el valor real.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="ch"&gt;&lt;div class="ci p"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"&gt;&lt;path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.34-2.23z"/&gt;&lt;/svg&gt;&lt;/div&gt;&lt;div&gt;&lt;div class="ct"&gt;Categoría&lt;/div&gt;&lt;div class="cs"&gt;Elige la que mejor la describe&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="catg"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="catc" id="cc-v" onclick="oSelC('v')"&gt;&lt;div class="ce"&gt;<span class="s2">👗</span>&lt;/div&gt;&lt;div class="cn"&gt;Vestido&lt;/div&gt;&lt;div class="cen"&gt;<span class="s1">↑</span>$274&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="catc" id="cc-c" onclick="oSelC('c')"&gt;&lt;div class="ce"&gt;<span class="s2">🧥</span>&lt;/div&gt;&lt;div class="cn"&gt;Chamarra&lt;/div&gt;&lt;div class="cen"&gt;<span class="s1">↑</span>$239&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="catc" id="cc-j" onclick="oSelC('j')"&gt;&lt;div class="ce"&gt;<span class="s2">👖</span>&lt;/div&gt;&lt;div class="cn"&gt;Jeans/Faldas&lt;/div&gt;&lt;div class="cen"&gt;<span class="s1">↑</span>$197&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="catc" id="cc-a" onclick="oSelC('a')"&gt;&lt;div class="ce"&gt;<span class="s2">👜</span>&lt;/div&gt;&lt;div class="cn"&gt;Accesorios&lt;/div&gt;&lt;div class="cen"&gt;<span class="s1">↑</span>$239&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="catc" id="cc-b" onclick="oSelC('b')"&gt;&lt;div class="ce"&gt;<span class="s2">👕</span>&lt;/div&gt;&lt;div class="cn"&gt;Blusas&lt;/div&gt;&lt;div class="cen"&gt;<span class="s1">↑</span>$162&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="vsec" id="ovsec" style="display:none"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="vlbl"&gt;Valor declarado de la prenda&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="vrow"&gt;&lt;div class="vnum" id="ovn"&gt;$500&lt;/div&gt;&lt;input type="range" id="ovsl" min="500" max="1600" value="500" step="10" oninput="oUpdE(this.value)"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="rlbls"&gt;&lt;span id="ormin"&gt;$500&lt;/span&gt;&lt;span id="ormax"&gt;$1,600&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="egrid"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="ec"&gt;&lt;div class="elbl"&gt;Ganancia por renta&lt;/div&gt;&lt;div class="eval" id="oep"&gt;$85&lt;/div&gt;&lt;div class="esub"&gt;Período base 3 días&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="ec"&gt;&lt;div class="elbl"&gt;Potencial mensual ×4&lt;/div&gt;&lt;div class="eval" id="oem2"&gt;$340&lt;/div&gt;&lt;div class="esub"&gt;Estimado sin garantía&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="nb"&gt;El valor declarado determina ganancia y depósito de garantía. Declara el valor real.&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="nav"&gt;&lt;button class="btn" onclick="oGo(0)"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;path d="M19 12H5M12 19l-7-7 7-7"/&gt;&lt;/svg&gt;Atrás&lt;/button&gt;&lt;button class="btn btnp" id="obn1" onclick="oGo(2)" disabled&gt;Continuar &lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;path d="M5 12h14M12 5l7 7-7 7"/&gt;&lt;/svg&gt;&lt;/button&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="pg" id="op2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h2 class="sh"&gt;Fotografías de tu prenda&lt;/h2&gt;&lt;p class="sd"&gt;4 imágenes: 2 del producto solo + 2 de cómo lo usarías.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="ch"&gt;&lt;div class="ci p"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"&gt;&lt;path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 0 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/&gt;&lt;circle cx="12" cy="13" r="4"/&gt;&lt;/svg&gt;&lt;/div&gt;&lt;div&gt;&lt;div class="ct"&gt;Sin usar — producto&lt;/div&gt;&lt;div class="cs"&gt;Extendida, colgada o doblada&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="prow"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="pz" id="oz0" onclick="oTr(0)"&gt;&lt;input type="file" id="ou0" accept="image/*" onchange="oPh(0,this)"&gt;&lt;div class="pph" id="oph0"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"&gt;&lt;rect x="3" y="3" width="18" height="18" rx="2"/&gt;&lt;circle cx="8.5" cy="8.5" r="1.5"/&gt;&lt;polyline points="21 15 16 10 5 21"/&gt;&lt;/svg&gt;&lt;p&gt;Foto 1&lt;/p&gt;&lt;small&gt;Frente completo&lt;/small&gt;&lt;/div&gt;&lt;img class="ppv" id="opv0"&gt;&lt;button class="pchg" id="opc0" onclick="oCp(event,0)"&gt;Cambiar&lt;/button&gt;&lt;div class="pck" id="opk0"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"&gt;&lt;path d="M20 6L9 17l-5-5"/&gt;&lt;/svg&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="pz" id="oz1" onclick="oTr(1)"&gt;&lt;input type="file" id="ou1" accept="image/*" onchange="oPh(1,this)"&gt;&lt;div class="pph" id="oph1"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"&gt;&lt;rect x="3" y="3" width="18" height="18" rx="2"/&gt;&lt;circle cx="8.5" cy="8.5" r="1.5"/&gt;&lt;polyline points="21 15 16 10 5 21"/&gt;&lt;/svg&gt;&lt;p&gt;Foto 2&lt;/p&gt;&lt;small&gt;Detalle / etiqueta&lt;/small&gt;&lt;/div&gt;&lt;img class="ppv" id="opv1"&gt;&lt;button class="pchg" id="opc1" onclick="oCp(event,1)"&gt;Cambiar&lt;/button&gt;&lt;div class="pck" id="opk1"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"&gt;&lt;path d="M20 6L9 17l-5-5"/&gt;&lt;/svg&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="ch" style="margin-top:4px;border-top:1px solid var(--bd);padding-top:.85rem;border-bottom:none;margin-bottom:0;padding-bottom:0"&gt;&lt;div class="ci g"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"&gt;&lt;path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/&gt;&lt;circle cx="12" cy="7" r="4"/&gt;&lt;/svg&gt;&lt;/div&gt;&lt;div&gt;&lt;div class="ct"&gt;Styling — cómo lo usarías&lt;/div&gt;&lt;div class="cs"&gt;En outfit completo&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="prow" style="margin-top:12px"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="pz" id="oz2" onclick="oTr(2)"&gt;&lt;input type="file" id="ou2" accept="image/*" onchange="oPh(2,this)"&gt;&lt;div class="pph" id="oph2"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"&gt;&lt;path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/&gt;&lt;circle cx="12" cy="7" r="4"/&gt;&lt;/svg&gt;&lt;p&gt;Foto 3&lt;/p&gt;&lt;small&gt;Outfit completo&lt;/small&gt;&lt;/div&gt;&lt;img class="ppv" id="opv2"&gt;&lt;button class="pchg" id="opc2" onclick="oCp(event,2)"&gt;Cambiar&lt;/button&gt;&lt;div class="pck" id="opk2"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"&gt;&lt;path d="M20 6L9 17l-5-5"/&gt;&lt;/svg&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="pz" id="oz3" onclick="oTr(3)"&gt;&lt;input type="file" id="ou3" accept="image/*" onchange="oPh(3,this)"&gt;&lt;div class="pph" id="oph3"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"&gt;&lt;path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/&gt;&lt;circle cx="12" cy="7" r="4"/&gt;&lt;/svg&gt;&lt;p&gt;Foto 4&lt;/p&gt;&lt;small&gt;Perspectiva diferente&lt;/small&gt;&lt;/div&gt;&lt;img class="ppv" id="opv3"&gt;&lt;button class="pchg" id="opc3" onclick="oCp(event,3)"&gt;Cambiar&lt;/button&gt;&lt;div class="pck" id="opk3"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"&gt;&lt;path d="M20 6L9 17l-5-5"/&gt;&lt;/svg&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="tbdg" id="obdg" style="margin-top:9px"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;rect x="3" y="3" width="18" height="18" rx="2"/&gt;&lt;circle cx="8.5" cy="8.5" r="1.5"/&gt;&lt;polyline points="21 15 16 10 5 21"/&gt;&lt;/svg&gt;&lt;span id="obdgtxt"&gt;Sube las 4 fotos para continuar (0/4)&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="nav"&gt;&lt;button class="btn" onclick="oGo(1)"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;path d="M19 12H5M12 19l-7-7 7-7"/&gt;&lt;/svg&gt;Atrás&lt;/button&gt;&lt;button class="btn btnp" id="obn2" onclick="oGo(3)" disabled&gt;Continuar &lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;path d="M5 12h14M12 5l7 7-7 7"/&gt;&lt;/svg&gt;&lt;/button&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="pg" id="op3"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h2 class="sh"&gt;Términos y condiciones&lt;/h2&gt;&lt;p class="sd"&gt;Lee hasta el final para habilitar la aceptación.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="twrap"&gt;&lt;div class="tbox" id="otbox" onscroll="oChkS()"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="hook"&gt;Compartir tu guardarropa con closet2me es la forma más inteligente de sacarle provecho a lo que ya tienes.&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h3&gt;1. Intermediario tecnológico&lt;/h3&gt;&lt;p&gt;closet2me conecta propietarios y renteros pero &lt;strong&gt;no asume responsabilidad directa&lt;/strong&gt; por el estado de las prendas. La responsabilidad recae en ambas partes.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h3&gt;2. Tasa de servicio&lt;/h3&gt;&lt;p&gt;Se descuenta una &lt;strong&gt;tasa de servicio operativa&lt;/strong&gt; que cubre gestión, &lt;strong&gt;limpieza post-renta&lt;/strong&gt;, logística de entrega y retorno. El monto neto se muestra antes de aceptar cada renta.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h3&gt;3. Período y tiempos&lt;/h3&gt;&lt;p&gt;Período base: &lt;strong&gt;3 días naturales&lt;/strong&gt;. Puede extenderse por tiempos de limpieza e inspección. El retorno puede tardar hasta 2 días hábiles adicionales sin compensación.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h3&gt;4. Responsabilidad por daños&lt;/h3&gt;&lt;p&gt;Los daños durante la renta son responsabilidad del &lt;strong&gt;rentero&lt;/strong&gt;. Daños previos no declarados son responsabilidad del propietario.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h3&gt;5. Pagos vía CLABE&lt;/h3&gt;&lt;p&gt;Ganancias depositadas por SPEI dentro de &lt;strong&gt;3 días hábiles&lt;/strong&gt; tras confirmar devolución sin incidentes.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h3&gt;6. Uso de imagen&lt;/h3&gt;&lt;p&gt;Al usar closet2me otorgas una &lt;strong&gt;licencia no exclusiva, gratuita e indefinida&lt;/strong&gt; para usar tu imagen y fotografías con fines de publicidad y marketing, sin compensación adicional.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div style="height:20px"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;&lt;div class="tf" id="otf"&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="tbdg" id="otbdg"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/&gt;&lt;circle cx="12" cy="12" r="3"/&gt;&lt;/svg&gt;&lt;span id="ottxt"&gt;Desplázate hasta el final para habilitar&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="card ckw lk" id="ockw"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="cki"&gt;&lt;input type="checkbox" id="ock1" onchange="oEvCk()"&gt;&lt;div&gt;&lt;div class="ckt"&gt;&lt;strong&gt;Acepto los términos y condiciones&lt;/strong&gt; incluyendo la tasa de servicio, período de 3 días ampliable, política de daños y responsabilidad entre partes.&lt;/div&gt;&lt;div class="cks"&gt;La tasa cubre limpieza, recepción y logística. closet2me es intermediario tecnológico.&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="cki"&gt;&lt;input type="checkbox" id="ock2" onchange="oEvCk()"&gt;&lt;div&gt;&lt;div class="ckt"&gt;&lt;strong&gt;Autorizo el uso de mi imagen y fotografías&lt;/strong&gt; para publicidad y marketing de closet2me sin compensación adicional.&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="nav"&gt;&lt;button class="btn" onclick="oGo(2)"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;path d="M19 12H5M12 19l-7-7 7-7"/&gt;&lt;/svg&gt;Atrás&lt;/button&gt;&lt;button class="btn btnp" id="obn3" onclick="oGo(4)" disabled&gt;Continuar &lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;path d="M5 12h14M12 5l7 7-7 7"/&gt;&lt;/svg&gt;&lt;/button&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="pg" id="op4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h2 class="sh"&gt;Cuenta bancaria&lt;/h2&gt;&lt;p class="sd"&gt;Aquí recibirás tus ganancias vía SPEI.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="ch"&gt;&lt;div class="ci p"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"&gt;&lt;rect x="1" y="4" width="22" height="16" rx="2"/&gt;&lt;line x1="1" y1="10" x2="23" y2="10"/&gt;&lt;/svg&gt;&lt;/div&gt;&lt;div&gt;&lt;div class="ct"&gt;CLABE interbancaria&lt;/div&gt;&lt;div class="cs"&gt;18 dígitos · Pagos vía SPEI&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div id="oclf"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="f"&gt;&lt;label&gt;Titular de la cuenta&lt;/label&gt;&lt;input type="text" id="ocn" placeholder="Como en tu estado de cuenta"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="f" style="margin-top:10px"&gt;&lt;label&gt;CLABE (18 dígitos)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="clrow"&gt;&lt;input type="text" id="ocin" placeholder="000000000000000000" maxlength="18" oninput="oCLin(this)" inputmode="numeric"&gt;&lt;button class="btns" onclick="oVCL()"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;path d="M20 6L9 17l-5-5"/&gt;&lt;/svg&gt;Verificar&lt;/button&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="bdet" id="obdet"&gt;&lt;div class="bdot"&gt;&lt;/div&gt;&lt;span id="obnm"&gt;—&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="errmsg" id="ocerr"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="clok" id="oclok"&gt;&lt;div class="bch" id="ochip"&gt;BBVA&lt;/div&gt;&lt;div class="clinfo"&gt;&lt;div class="ct2"&gt;CLABE verificada&lt;/div&gt;&lt;div class="cs2" id="ocmsk"&gt;—&lt;/div&gt;&lt;/div&gt;&lt;button class="btns" onclick="oChCL()" style="margin-left:auto"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;polyline points="1 4 1 10 7 10"/&gt;&lt;path d="M3.51 15a9 9 0 1 0 .49-3.5"/&gt;&lt;/svg&gt;Cambiar&lt;/button&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="sbdgs"&gt;&lt;span class="sbdg"&gt;<span class="s2">🔒</span> PCI DSS&lt;/span&gt;&lt;span class="sbdg"&gt;<span class="s2">🔐</span> TLS 256-bit&lt;/span&gt;&lt;span class="sbdg"&gt;SPEI&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="nav"&gt;&lt;button class="btn" onclick="oGo(3)"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;path d="M19 12H5M12 19l-7-7 7-7"/&gt;&lt;/svg&gt;Atrás&lt;/button&gt;&lt;button class="btn btnp" id="obn4" onclick="oGo(5)" disabled&gt;Continuar &lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;path d="M5 12h14M12 5l7 7-7 7"/&gt;&lt;/svg&gt;&lt;/button&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="pg" id="op5"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h2 class="sh"&gt;Firma y confirma&lt;/h2&gt;&lt;p class="sd"&gt;Revisa el resumen y firma para completar tu registro.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="ch"&gt;&lt;div class="ci p"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"&gt;&lt;path d="M9 11l3 3L22 4"/&gt;&lt;path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/&gt;&lt;/svg&gt;&lt;/div&gt;&lt;div&gt;&lt;div class="ct"&gt;Resumen de registro&lt;/div&gt;&lt;div class="cs"&gt;Verifica antes de firmar&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="sr"&gt;&lt;span class="sl"&gt;Nombre&lt;/span&gt;&lt;span class="sv" id="osn"&gt;—&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="sr"&gt;&lt;span class="sl"&gt;Teléfono&lt;/span&gt;&lt;span class="sv" id="osph"&gt;—&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="sr"&gt;&lt;span class="sl"&gt;Categoría&lt;/span&gt;&lt;span class="sv" id="osc"&gt;—&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="sr"&gt;&lt;span class="sl"&gt;Valor declarado&lt;/span&gt;&lt;span class="sv" id="osv"&gt;—&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="sr"&gt;&lt;span class="sl"&gt;Ganancia / renta&lt;/span&gt;&lt;span class="sv" id="ose"&gt;—&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="sr"&gt;&lt;span class="sl"&gt;CLABE&lt;/span&gt;&lt;span class="sv" id="oscl"&gt;—&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="sr"&gt;&lt;span class="sl"&gt;Timestamp&lt;/span&gt;&lt;span class="sv mono" id="osts"&gt;—&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style="margin-top:10px"&gt;&lt;div style="font-size:9.5px;color:var(--il);font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px"&gt;Hash SHA-256&lt;/div&gt;&lt;div class="hb" id="osh"&gt;—&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="ch"&gt;&lt;div class="ci p"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"&gt;&lt;path d="M20 19.5v.5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8.5L18 5.5"/&gt;&lt;path d="M8 18h1l12.5-12.5-1-1L8 17v1z"/&gt;&lt;/svg&gt;&lt;/div&gt;&lt;div&gt;&lt;div class="ct"&gt;Firma autógrafa digital&lt;/div&gt;&lt;div class="cs"&gt;Mínimo 3 trazos para validar&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;canvas id="osigc" class="sigc" width="560" height="110"&gt;&lt;/canvas&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="sigh"&gt;&lt;span id="osigh"&gt;Firma en el recuadro de arriba&lt;/span&gt;&lt;button class="btns" onclick="oClrS()"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;polyline points="3 6 5 6 21 6"/&gt;&lt;path d="M19 6l-1 14H6L5 6"/&gt;&lt;/svg&gt;Limpiar&lt;/button&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="card"&gt;&lt;div class="cki" style="padding:0;border:none"&gt;&lt;input type="checkbox" id="ofck" onchange="oEvF()" style="width:16px;height:16px;accent-color:var(--p);flex-shrink:0;margin-top:2px;cursor:pointer"&gt;&lt;div&gt;&lt;div class="ckt" style="font-weight:500"&gt;Confirmo que todos los datos son correctos y que esta firma digital tiene la misma validez que una firma autógrafa conforme a la LFEA y el Código de Comercio de México.&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="nav"&gt;&lt;button class="btn" onclick="oGo(4)"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;path d="M19 12H5M12 19l-7-7 7-7"/&gt;&lt;/svg&gt;Atrás&lt;/button&gt;&lt;button class="btn btnp" id="obn5" onclick="oFin()"&gt;Registrar prenda&lt;/button&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;p class="saving" id="osaving"&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="pg" id="op6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="card"&gt;&lt;div class="sucw"&gt;&lt;div class="sring o"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"&gt;&lt;path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/&gt;&lt;polyline points="22 4 12 14.01 9 11.01"/&gt;&lt;/svg&gt;&lt;/div&gt;&lt;h2 class="stit"&gt;¡Tu prenda está lista!&lt;/h2&gt;&lt;p class="ssub"&gt;Registro completado con firma digital y hash SHA-256. La revisaremos y publicaremos en 24–48 horas.&lt;/p&gt;&lt;/div&gt;&lt;div class="cmeta"&gt;&lt;div class="sr"&gt;&lt;span class="sl"&gt;ID de registro&lt;/span&gt;&lt;span class="sv mono" id="ocid"&gt;—&lt;/span&gt;&lt;/div&gt;&lt;div class="sr"&gt;&lt;span class="sl"&gt;Propietario&lt;/span&gt;&lt;span class="sv" id="ocname"&gt;—&lt;/span&gt;&lt;/div&gt;&lt;div class="sr" style="border:none"&gt;&lt;span class="sl"&gt;Ganancia estimada&lt;/span&gt;&lt;span class="sv" id="ocearn"&gt;—&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;p style="font-size:11.5px;color:var(--g);text-align:center;margin-top:1rem;font-weight:500"&gt;<span class="s2">🎉</span> ¡Bienvenido a closet2me!&lt;/p&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- RENTER FLOW --&gt;</p>
+<p class="p1">&lt;div class="sc" id="sc-renter"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="prog"&gt;&lt;div class="ph"&gt;&lt;span class="pl" id="rplbl"&gt;Paso 1 de 5&lt;/span&gt;&lt;span class="pp" id="rppct"&gt;20%&lt;/span&gt;&lt;/div&gt;&lt;div class="pb"&gt;&lt;div class="pf r" id="rpf" style="width:20%"&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="tabs"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="tab av r" id="rt0"&gt;&lt;span class="tn"&gt;1&lt;/span&gt;Identidad&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="tab pend" id="rt1"&gt;&lt;span class="tn"&gt;2&lt;/span&gt;Términos&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="tab pend" id="rt2"&gt;&lt;span class="tn"&gt;3&lt;/span&gt;Pago&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="tab pend" id="rt3"&gt;&lt;span class="tn"&gt;4&lt;/span&gt;Firma&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="tab pend" id="rt4"&gt;&lt;span class="tn"&gt;5&lt;/span&gt;Confirmar&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="pg on" id="rp0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="bl" onclick="backLand()"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;path d="M19 12H5M12 19l-7-7 7-7"/&gt;&lt;/svg&gt;Cambiar rol&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h2 class="sh"&gt;Datos de identificación&lt;/h2&gt;&lt;p class="sd"&gt;Ingresa tus datos tal como aparecen en tu INE vigente.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="ch"&gt;&lt;div class="ci g"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"&gt;&lt;rect x="2" y="5" width="20" height="14" rx="2"/&gt;&lt;circle cx="9" cy="10" r="2"/&gt;&lt;path d="M13 10h4M13 14h4M5 14a4 4 0 0 1 8 0"/&gt;&lt;/svg&gt;&lt;/div&gt;&lt;div&gt;&lt;div class="ct"&gt;Identificación oficial&lt;/div&gt;&lt;div class="cs"&gt;INE, pasaporte o cédula profesional&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="fg"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="f ff"&gt;&lt;label&gt;Nombre completo&lt;/label&gt;&lt;input type="text" id="rn" placeholder="Como aparece en tu INE"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="f"&gt;&lt;label&gt;Fecha de nacimiento&lt;/label&gt;&lt;input type="date" id="rdob"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="f"&gt;&lt;label&gt;Tipo de ID&lt;/label&gt;&lt;select id="rtid"&gt;&lt;option value=""&gt;Selecciona...&lt;/option&gt;&lt;option&gt;INE / IFE&lt;/option&gt;&lt;option&gt;Pasaporte mexicano&lt;/option&gt;&lt;option&gt;Cédula profesional&lt;/option&gt;&lt;/select&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="f ff"&gt;&lt;label&gt;CURP&lt;/label&gt;&lt;div class="cpr"&gt;&lt;input type="text" id="rcurp" placeholder="ABCD123456HDFXXX00" maxlength="18"&gt;&lt;button class="btns" onclick="rVCURP()"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;path d="M20 6L9 17l-5-5"/&gt;&lt;/svg&gt;Verificar&lt;/button&gt;&lt;/div&gt;&lt;div class="errmsg" id="rcst"&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="f"&gt;&lt;label&gt;Correo&lt;/label&gt;&lt;input type="email" id="rem" placeholder="correo@ejemplo.com"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="f"&gt;&lt;label&gt;Celular&lt;/label&gt;&lt;input type="tel" id="rtel" placeholder="+52 xxx xxx xxxx"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="nav"&gt;&lt;div&gt;&lt;/div&gt;&lt;button class="btn btnp g" onclick="rGo(1)"&gt;Continuar &lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;path d="M5 12h14M12 5l7 7-7 7"/&gt;&lt;/svg&gt;&lt;/button&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="pg" id="rp1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h2 class="sh"&gt;Términos y condiciones&lt;/h2&gt;&lt;p class="sd"&gt;Lee hasta el final para habilitar la aceptación.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="twrap"&gt;&lt;div class="tbox" id="rtbox" onscroll="rChkS()"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="hook"&gt;Imagina estrenar un look diferente cada semana sin gastar una fortuna. Eso es lo que closet2me hace posible.&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h3&gt;1. Tu privacidad&lt;/h3&gt;&lt;p&gt;Conforme a la &lt;strong&gt;LFPDPPP&lt;/strong&gt; recopilamos nombre, CURP, correo, celular y método de pago. Solo para verificar identidad, procesar rentas y gestionar pagos. Responsable: privacidad@closet2me.mx&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h3&gt;2. Condiciones de uso&lt;/h3&gt;&lt;p&gt;Mayor de 18 años, ID vigente, residente en México. Usa la prenda solo para el fin declarado, devuelve en tiempo y reporta daños inmediatamente. La responsabilidad por daños durante la renta recae en el rentero.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h3&gt;3. Categorías y precios&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Categoría&lt;/th&gt;&lt;th&gt;Valor mín.&lt;/th&gt;&lt;th&gt;Valor máx.&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;Vestido&lt;/td&gt;&lt;td&gt;$500&lt;/td&gt;&lt;td&gt;$1,600&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Chamarra&lt;/td&gt;&lt;td&gt;$700&lt;/td&gt;&lt;td&gt;$1,400&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Jeans/Faldas&lt;/td&gt;&lt;td&gt;$300&lt;/td&gt;&lt;td&gt;$1,150&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Accesorios&lt;/td&gt;&lt;td&gt;$280&lt;/td&gt;&lt;td&gt;$1,400&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Blusas&lt;/td&gt;&lt;td&gt;$250&lt;/td&gt;&lt;td&gt;$950&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p&gt;&lt;strong&gt;Período base: 3 días naturales.&lt;/strong&gt; Retraso sin aviso: &lt;strong&gt;$150 MXN/día.&lt;/strong&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h3&gt;4. Depósito y daños&lt;/h3&gt;&lt;p&gt;Depósito bloqueado al confirmar — &lt;strong&gt;no se cobra&lt;/strong&gt; sin incidentes. Se libera en 24–48 hrs. Cargos por daño sobre valor declarado: mancha removible 10–20%, pérdida total 100%+$200 MXN.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h3&gt;5. Cancelaciones&lt;/h3&gt;&lt;p&gt;+48 hrs: 100% · 24-48 hrs: 50% · menos de 24 hrs: sin reembolso.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h3&gt;6. Jurisdicción&lt;/h3&gt;&lt;p&gt;Disputas vía Centro de Resolución. Jurisdicción: &lt;strong&gt;Estado de Guanajuato, México&lt;/strong&gt;.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div style="height:20px"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;&lt;div class="tf" id="rtf"&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="tbdg" id="rtbdg"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/&gt;&lt;circle cx="12" cy="12" r="3"/&gt;&lt;/svg&gt;&lt;span id="rttxt"&gt;Desplázate hasta el final para habilitar&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="card ckw lk" id="rckw"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="cki"&gt;&lt;input type="checkbox" id="rc1" onchange="rEvCk()"&gt;&lt;div&gt;&lt;div class="ckt"&gt;Acepto el aviso de privacidad y el tratamiento de mis datos conforme a la LFPDPPP.&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="cki"&gt;&lt;input type="checkbox" id="rc2" onchange="rEvCk()"&gt;&lt;div&gt;&lt;div class="ckt"&gt;Acepto las condiciones de uso y la responsabilidad por daños durante la renta.&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="cki"&gt;&lt;input type="checkbox" id="rc3" onchange="rEvCk()"&gt;&lt;div&gt;&lt;div class="ckt"&gt;Acepto el período base de 3 días y el cargo de $150 MXN/día por retraso.&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="cki"&gt;&lt;input type="checkbox" id="rc4" onchange="rEvCk()"&gt;&lt;div&gt;&lt;div class="ckt"&gt;Acepto la política de daños y autorizo cargos automáticos sobre el valor declarado.&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="cki"&gt;&lt;input type="checkbox" id="rc5" onchange="rEvCk()"&gt;&lt;div&gt;&lt;div class="ckt"&gt;Autorizo el bloqueo temporal del depósito de garantía al confirmar cada renta.&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="cki"&gt;&lt;input type="checkbox" id="rc6" onchange="rEvCk()"&gt;&lt;div&gt;&lt;div class="ckt"&gt;He leído la totalidad del documento y acepto quedar sujeto/a a estos términos.&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="nav"&gt;&lt;button class="btn" onclick="rGo(0)"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;path d="M19 12H5M12 19l-7-7 7-7"/&gt;&lt;/svg&gt;Atrás&lt;/button&gt;&lt;button class="btn btnp g" id="rbn1" onclick="rGo(2)" disabled&gt;Continuar &lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;path d="M5 12h14M12 5l7 7-7 7"/&gt;&lt;/svg&gt;&lt;/button&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="pg" id="rp2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h2 class="sh"&gt;Método de pago&lt;/h2&gt;&lt;p class="sd"&gt;Tu tarjeta no se cobra ahora. Se guarda cifrada con Stripe para el depósito de garantía.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="ch"&gt;&lt;div class="ci g"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"&gt;&lt;rect x="1" y="4" width="22" height="16" rx="2"/&gt;&lt;line x1="1" y1="10" x2="23" y2="10"/&gt;&lt;/svg&gt;&lt;/div&gt;&lt;div&gt;&lt;div class="ct"&gt;Datos de la tarjeta&lt;/div&gt;&lt;div class="cs"&gt;Cifrado TLS · Procesado por Stripe&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div id="rdf"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="payment-element"&gt;&lt;p style="font-size:12px;color:var(--il)"&gt;Cargando formulario seguro…&lt;/p&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="errmsg" id="rderr"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button class="vbtn g" id="rpaybtn" onclick="rConfirmCard()"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/&gt;&lt;/svg&gt;Verificar y guardar tarjeta&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="cvr" id="rcvr" style="display:none"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="bch" id="rbch"&gt;VISA&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div&gt;&lt;div style="font-weight:600;font-size:13.5px;color:var(--g)"&gt;Tarjeta verificada&lt;/div&gt;&lt;div style="font-size:11.5px;color:var(--im);font-family:'DM Mono',monospace;margin-top:2px"&gt;•••• •••• •••• &lt;span id="rl4"&gt;4242&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button class="btns" onclick="rChC()" style="margin-left:auto"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;polyline points="1 4 1 10 7 10"/&gt;&lt;path d="M3.51 15a9 9 0 1 0 .49-3.5"/&gt;&lt;/svg&gt;Cambiar&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="sbdgs"&gt;&lt;span class="sbdg"&gt;<span class="s2">🔒</span> PCI DSS&lt;/span&gt;&lt;span class="sbdg"&gt;<span class="s2">🔐</span> TLS 256-bit&lt;/span&gt;&lt;span class="sbdg"&gt;Powered by Stripe&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="nav"&gt;&lt;button class="btn" onclick="rGo(1)"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;path d="M19 12H5M12 19l-7-7 7-7"/&gt;&lt;/svg&gt;Atrás&lt;/button&gt;&lt;button class="btn btnp g" id="rbn2" onclick="rGo(3)" disabled&gt;Continuar &lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;path d="M5 12h14M12 5l7 7-7 7"/&gt;&lt;/svg&gt;&lt;/button&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="pg" id="rp3"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h2 class="sh"&gt;Firma autógrafa digital&lt;/h2&gt;&lt;p class="sd"&gt;Dibuja tu firma. Mínimo 3 trazos.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="ch"&gt;&lt;div class="ci g"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"&gt;&lt;path d="M20 19.5v.5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8.5L18 5.5"/&gt;&lt;path d="M8 18h1l12.5-12.5-1-1L8 17v1z"/&gt;&lt;/svg&gt;&lt;/div&gt;&lt;div&gt;&lt;div class="ct"&gt;Área de firma&lt;/div&gt;&lt;div class="cs"&gt;Mínimo 3 trazos para validar&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;canvas id="rsigc" class="sigc" width="560" height="110"&gt;&lt;/canvas&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="sigh"&gt;&lt;span id="rsigh"&gt;Firma en el recuadro de arriba&lt;/span&gt;&lt;button class="btns" onclick="rClrS()"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;polyline points="3 6 5 6 21 6"/&gt;&lt;path d="M19 6l-1 14H6L5 6"/&gt;&lt;/svg&gt;Limpiar&lt;/button&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="tsr"&gt;&lt;span style="color:var(--il)"&gt;Fecha y hora (CDMX)&lt;/span&gt;&lt;span style="font-family:'DM Mono',monospace;font-size:11.5px;font-weight:500" id="rtsv"&gt;—&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="tsr"&gt;&lt;span style="color:var(--il)"&gt;Plataforma&lt;/span&gt;&lt;span style="font-family:'DM Mono',monospace;font-size:11.5px;font-weight:500" id="ruav"&gt;—&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="tsr" style="border:none"&gt;&lt;span style="color:var(--il)"&gt;IP&lt;/span&gt;&lt;span style="font-family:'DM Mono',monospace;font-size:11.5px;font-weight:500"&gt;registrada en servidor&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="nav"&gt;&lt;button class="btn" onclick="rGo(2)"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;path d="M19 12H5M12 19l-7-7 7-7"/&gt;&lt;/svg&gt;Atrás&lt;/button&gt;&lt;button class="btn btnp g" id="rbn3" onclick="rGo(4)" disabled&gt;Revisar y confirmar &lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;path d="M5 12h14M12 5l7 7-7 7"/&gt;&lt;/svg&gt;&lt;/button&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="pg" id="rp4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h2 class="sh"&gt;Confirma tu registro&lt;/h2&gt;&lt;p class="sd"&gt;Verifica todos los datos antes de firmar.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="ch"&gt;&lt;div class="ci g"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"&gt;&lt;path d="M9 11l3 3L22 4"/&gt;&lt;path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/&gt;&lt;/svg&gt;&lt;/div&gt;&lt;div&gt;&lt;div class="ct"&gt;Resumen de aceptación&lt;/div&gt;&lt;div class="cs"&gt;Revisa antes de firmar definitivamente&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="sr"&gt;&lt;span class="sl"&gt;Nombre&lt;/span&gt;&lt;span class="sv" id="rsn"&gt;—&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="sr"&gt;&lt;span class="sl"&gt;CURP&lt;/span&gt;&lt;span class="sv mono" id="rsc"&gt;—&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="sr"&gt;&lt;span class="sl"&gt;Correo&lt;/span&gt;&lt;span class="sv" id="rse"&gt;—&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="sr"&gt;&lt;span class="sl"&gt;Celular&lt;/span&gt;&lt;span class="sv" id="rst"&gt;—&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="sr"&gt;&lt;span class="sl"&gt;Método de pago&lt;/span&gt;&lt;span class="sv" id="rsp"&gt;—&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="sr"&gt;&lt;span class="sl"&gt;Firma digital&lt;/span&gt;&lt;span class="sv"&gt;&lt;span class="pill pill-ok"&gt;<span class="s1">✓</span> Registrada&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="sr"&gt;&lt;span class="sl"&gt;Cláusulas&lt;/span&gt;&lt;span class="sv"&gt;&lt;span class="pill pill-ok"&gt;6 / 6&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="sr"&gt;&lt;span class="sl"&gt;Timestamp&lt;/span&gt;&lt;span class="sv mono" id="rsts"&gt;—&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style="margin-top:10px"&gt;&lt;div style="font-size:9.5px;color:var(--il);font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px"&gt;Hash SHA-256&lt;/div&gt;&lt;div class="hb" id="rsh"&gt;—&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="card"&gt;&lt;div class="cki" style="padding:0;border:none"&gt;&lt;input type="checkbox" id="rfck" onchange="rEvF()" style="width:16px;height:16px;accent-color:var(--g);flex-shrink:0;margin-top:2px;cursor:pointer"&gt;&lt;div&gt;&lt;div class="ckt" style="font-weight:500"&gt;Confirmo que toda la información es correcta y que esta firma digital tiene la misma validez jurídica que una firma autógrafa conforme a la LFEA y el Código de Comercio de México.&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="nav"&gt;&lt;button class="btn" onclick="rGo(3)"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;path d="M19 12H5M12 19l-7-7 7-7"/&gt;&lt;/svg&gt;Atrás&lt;/button&gt;&lt;button class="btn btnp g" id="rbn4" onclick="rFin()"&gt;Firmar contrato &lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/&gt;&lt;polyline points="14 2 14 8 20 8"/&gt;&lt;/svg&gt;&lt;/button&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;p class="saving" id="rsaving"&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="pg" id="rp5"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="card"&gt;&lt;div class="sucw"&gt;&lt;div class="sring r"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"&gt;&lt;path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/&gt;&lt;polyline points="22 4 12 14.01 9 11.01"/&gt;&lt;/svg&gt;&lt;/div&gt;&lt;h2 class="stit"&gt;¡Ya eres parte de closet2me!&lt;/h2&gt;&lt;p class="ssub"&gt;Contrato firmado con método de pago verificado, firma digital y hash SHA-256.&lt;/p&gt;&lt;/div&gt;&lt;div class="cmeta"&gt;&lt;div class="sr"&gt;&lt;span class="sl"&gt;ID de contrato&lt;/span&gt;&lt;span class="sv mono" id="rcid"&gt;—&lt;/span&gt;&lt;/div&gt;&lt;div class="sr"&gt;&lt;span class="sl"&gt;Firmante&lt;/span&gt;&lt;span class="sv" id="rcname"&gt;—&lt;/span&gt;&lt;/div&gt;&lt;div class="sr" style="border:none"&gt;&lt;span class="sl"&gt;Fecha y hora&lt;/span&gt;&lt;span class="sv mono" id="rcts"&gt;—&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;p style="font-size:11.5px;color:var(--g);text-align:center;margin-top:1rem;font-weight:500"&gt;<span class="s2">🎉</span> ¡Bienvenida/o a closet2me!&lt;/p&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;script&gt;</p>
+<p class="p1">/* ── SUPABASE CONFIG ── */</p>
+<p class="p1">const SURL='https://hbxmidxtrpoprxbytiuk.supabase.co';</p>
+<p class="p1">const SKEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhieG1pZHh0cnBvcHJ4Ynl0aXVrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5NDMyMDksImV4cCI6MjA5NjUxOTIwOX0.5i8WznnOS13280Ce1q6245flliEfTtPhO8ivAXF931Y';</p>
+<p class="p2"><br></p>
+<p class="p1">/* ── STRIPE CONFIG ──</p>
+<p class="p1"><span class="Apple-converted-space">   </span>1. Reemplaza STRIPE_PK con tu llave PUBLICABLE de Stripe:</p>
+<p class="p1"><span class="Apple-converted-space">      </span>- Pruebas:<span class="Apple-converted-space">    </span>pk_test_...</p>
+<p class="p1"><span class="Apple-converted-space">      </span>- Producción: pk_live_...</p>
+<p class="p1"><span class="Apple-converted-space">   </span>2. La llave SECRETA (sk_...) NUNCA va aquí. Vive solo en</p>
+<p class="p1"><span class="Apple-converted-space">      </span>la Edge Function de Supabase (stripe-setup).<span class="Apple-converted-space">            </span>*/</p>
+<p class="p1">const STRIPE_PK='pk_live_51TeHkxGeM1TjWVkegkdsKSOfrS8XKSlsPSco0KS70L4PVgzK7LcAdWfBOPyl7SGCJQDqMhZhHh16hzdA63u5gRxb00oIotzOFB';</p>
+<p class="p1">const EDGE_URL=SURL+'/functions/v1/stripe-setup';</p>
+<p class="p2"><br></p>
+<p class="p1">async function sbInsert(table,data){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>try{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const r=await fetch(SURL+'/rest/v1/'+table,{</p>
+<p class="p1"><span class="Apple-converted-space">      </span>method:'POST',</p>
+<p class="p1"><span class="Apple-converted-space">      </span>headers:{'apikey':SKEY,'Authorization':'Bearer '+SKEY,'Content-Type':'application/json','Prefer':'return=minimal'},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>body:JSON.stringify(data)</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if(!r.ok){const e=await r.text();console.error('Supabase error:',e);return false;}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>return true;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}catch(e){console.error('Error:',e);return false;}</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">async function edgeCall(payload){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const r=await fetch(EDGE_URL,{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>method:'POST',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>headers:{'Content-Type':'application/json','Authorization':'Bearer '+SKEY,'apikey':SKEY},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>body:JSON.stringify(payload)</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const d=await r.json().catch(function(){return{};});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(!r.ok)throw new Error(d.error||'Error del servidor de pagos');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return d;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* ── CONSTANTS ── */</p>
+<p class="p1">const OSTEPS=['Paso 1 de 6 — Perfil','Paso 2 de 6 — Prenda','Paso 3 de 6 — Fotos','Paso 4 de 6 — Términos','Paso 5 de 6 — CLABE','Paso 6 de 6 — Firma'];</p>
+<p class="p1">const RSTEPS=['Paso 1 de 5 — Identidad','Paso 2 de 5 — Términos','Paso 3 de 5 — Pago','Paso 4 de 5 — Firma','Paso 5 de 5 — Confirmar'];</p>
+<p class="p1">const PCTS=['17%','33%','50%','67%','83%','100%'];</p>
+<p class="p1">const CATS={v:{n:'Vestido',e:'<span class="s2">👗</span>',min:500,max:1600,mE:274},c:{n:'Chamarra',e:'<span class="s2">🧥</span>',min:700,max:1400,mE:239},j:{n:'Jeans/Faldas',e:'<span class="s2">👖</span>',min:300,max:1150,mE:197},a:{n:'Accesorios',e:'<span class="s2">👜</span>',min:280,max:1400,mE:239},b:{n:'Blusas',e:'<span class="s2">👕</span>',min:250,max:950,mE:162}};</p>
+<p class="p1">const BANKS={'002':'BBVA México','006':'Bancomext','021':'HSBC México','036':'Inbursa','044':'Scotiabank','058':'Banregio','072':'Banorte','127':'Banco Azteca','137':'BanCoppel','143':'CIBanco','646':'STP','706':'Arcus','723':'Cuenca','732':'Mercado Pago'};</p>
+<p class="p2"><br></p>
+<p class="p1">/* ── STATE ── */</p>
+<p class="p1">let oCur=0,oSC=null,oIV=0,oClV='',oTs='',oHash='',oCD={},oSCtx=null,oStr=0,oDrw=false,oTR=false,oPhotos=[null,null,null,null];</p>
+<p class="p1">let rCur=0,rTR=false,rTs='',rHash='',rCD={},rPI=null,rL4=null,rBr=null,rSCtx=null,rStr=0,rDrw=false;</p>
+<p class="p1">let stripeJS=null,stripeElems=null,rCustId=null,rStripeLoading=false;</p>
+<p class="p2"><br></p>
+<p class="p1">async function sha256(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return Array.from(new Uint8Array(b)).map(x=&gt;x.toString(16).padStart(2,'0')).join('');}</p>
+<p class="p2"><br></p>
+<p class="p1">/* ── ROLE ── */</p>
+<p class="p1">function selRol(r){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('sc-land').classList.remove('on');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('sc-'+r).classList.add('on');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const h=document.getElementById('hbg');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>h.textContent=r==='owner'?'Propietario':'Rentero';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>h.className='hbg '+(r==='owner'?'o':'r');</p>
+<p class="p1">}</p>
+<p class="p1">function backLand(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>['sc-owner','sc-renter'].forEach(function(id){document.getElementById(id).classList.remove('on');});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('sc-land').classList.add('on');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const h=document.getElementById('hbg');h.textContent='Elige tu rol';h.className='hbg n';</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* ── OWNER NAV ── */</p>
+<p class="p1">function oGo(n){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('op'+oCur).classList.remove('on');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(oCur&lt;6){const t=document.getElementById('ot'+oCur);t.classList.remove('av','o');if(n&gt;oCur)t.classList.add('done');else t.classList.remove('done');}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>oCur=n;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('op'+n).classList.add('on');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(n&lt;6){const t=document.getElementById('ot'+n);t.classList.remove('pend','done');t.classList.add('av','o');document.getElementById('oplbl').textContent=OSTEPS[n];document.getElementById('oppct').textContent=PCTS[n];document.getElementById('opf').style.width=PCTS[n];}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(n===5){oInitSig();}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>window.scrollTo({top:0,behavior:'smooth'});</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* ── OWNER PHOTOS ── */</p>
+<p class="p1">function oTr(i){document.getElementById('ou'+i).click();}</p>
+<p class="p1">function oPh(i,inp){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const f=inp.files[0];if(!f)return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const r=new FileReader();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>r.onload=function(e){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>oPhotos[i]=e.target.result;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('oph'+i).style.display='none';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const pv=document.getElementById('opv'+i);pv.src=e.target.result;pv.style.display='block';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('opc'+i).style.display='block';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('opk'+i).style.display='flex';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('oz'+i).classList.add('ok');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>oChkPh();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>};</p>
+<p class="p1"><span class="Apple-converted-space">  </span>r.readAsDataURL(f);</p>
+<p class="p1">}</p>
+<p class="p1">function oCp(e,i){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>e.stopPropagation();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>oPhotos[i]=null;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('opv'+i).style.display='none';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('opc'+i).style.display='none';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('opk'+i).style.display='none';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('oph'+i).style.display='flex';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('oz'+i).classList.remove('ok');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('ou'+i).value='';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>oChkPh();</p>
+<p class="p1">}</p>
+<p class="p1">function oChkPh(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const cnt=oPhotos.filter(function(p){return p;}).length;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const ok=cnt===4;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('obdg').classList.toggle('ok',ok);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('obdgtxt').textContent=ok?'¡Las 4 fotos están listas!':'Sube las 4 fotos para continuar ('+cnt+'/4)';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('obn2').disabled=!ok;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* ── OWNER CATEGORY ── */</p>
+<p class="p1">function oSelC(k){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>oSC=k;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.querySelectorAll('.catc').forEach(function(c){c.classList.remove('sel');});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('cc-'+k).classList.add('sel');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const cat=CATS[k];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const sl=document.getElementById('ovsl');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>sl.min=cat.min;sl.max=cat.max;sl.value=cat.min;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('ormin').textContent='$'+cat.min.toLocaleString();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('ormax').textContent='$'+cat.max.toLocaleString();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('ovsec').style.display='block';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>oIV=cat.min;oUpdE(cat.min);</p>
+<p class="p1">}</p>
+<p class="p1">function oUpdE(v){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>oIV=parseInt(v);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(!oSC)return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const cat=CATS[oSC];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const e=Math.round(oIV*(cat.mE/cat.max));</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('ovn').textContent='$'+oIV.toLocaleString();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('oep').textContent='$'+e.toLocaleString();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('oem2').textContent='$'+(e*4).toLocaleString();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('obn1').disabled=false;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* ── OWNER TERMS ── */</p>
+<p class="p1">function oChkS(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(oTR)return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const el=document.getElementById('otbox');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(el.scrollTop+el.clientHeight&gt;=el.scrollHeight-10){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>oTR=true;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('otbdg').classList.add('ok');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('ottxt').textContent='Leído — ya puedes aceptar';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('otf').style.opacity='0';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('ockw').classList.remove('lk');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1">}</p>
+<p class="p1">function oEvCk(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('obn3').disabled=!(document.getElementById('ock1').checked&amp;&amp;document.getElementById('ock2').checked);</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* ── OWNER CLABE ── */</p>
+<p class="p1">function oCLin(el){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const v=el.value.replace(/\D/g,'').substring(0,18);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>el.value=v;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('obn4').disabled=true;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const bk=BANKS[v.substring(0,3)];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const bd=document.getElementById('obdet');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(v.length&gt;=3){bd.style.display='flex';document.getElementById('obnm').textContent=bk||'Banco no identificado';}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>else{bd.style.display='none';}</p>
+<p class="p1">}</p>
+<p class="p1">function luhnCL(c){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(!/^\d{18}$/.test(c))return false;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const w=[3,7,1,3,7,1,3,7,1,3,7,1,3,7,1,3,7];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const s=w.reduce(function(a,wi,i){return a+parseInt(c[i])*wi;},0);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return(10-(s%10))%10===parseInt(c[17]);</p>
+<p class="p1">}</p>
+<p class="p1">function oVCL(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const v=document.getElementById('ocin').value.replace(/\D/g,'');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const err=document.getElementById('ocerr');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(v.length!==18){err.textContent='La CLABE debe tener 18 dígitos';return;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(!luhnCL(v)){err.textContent='CLABE inválida — verifica el número';return;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const name=document.getElementById('ocn').value.trim();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(!name){err.textContent='Ingresa el nombre del titular';return;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>err.textContent='';oClV=v;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('oclf').style.display='none';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('oclok').style.display='flex';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const bk=BANKS[v.substring(0,3)]||'Banco';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('ochip').textContent=bk.split(' ')[0].substring(0,5).toUpperCase();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('ocmsk').textContent=v.substring(0,3)+' *** *** *** *** '+v.slice(-3);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('obn4').disabled=false;</p>
+<p class="p1">}</p>
+<p class="p1">function oChCL(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>oClV='';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('oclok').style.display='none';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('oclf').style.display='block';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('obn4').disabled=true;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* ── OWNER SIGNATURE ── */</p>
+<p class="p1">async function oInitSig(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const now=new Date();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>oTs=now.toLocaleString('es-MX',{timeZone:'America/Mexico_City',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit'});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const cat=CATS[oSC]||{n:'—',mE:0,max:1};</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const earn=Math.round(oIV*(cat.mE/cat.max));</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('osn').textContent=document.getElementById('on').value||'—';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('osph').textContent=document.getElementById('oph').value||'—';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('osc').textContent=cat.n+' '+cat.e;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('osv').textContent='$'+oIV.toLocaleString()+' MXN';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('ose').textContent='$'+earn.toLocaleString()+' MXN';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const bk=BANKS[oClV.substring(0,3)]||'Banco';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('oscl').textContent=bk+' *** '+oClV.slice(-3);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('osts').textContent=oTs;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const raw=(document.getElementById('on').value||'')+oClV.substring(0,6)+(oSC||'')+oIV+oTs;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>oHash=await sha256(raw);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('osh').textContent=oHash;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>oCD={name:document.getElementById('on').value.trim(),cat:cat.n,val:oIV,earn:earn,ts:oTs,hash:oHash};</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(!oSCtx){oInitSC();}</p>
+<p class="p1">}</p>
+<p class="p1">function oInitSC(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const c=document.getElementById('osigc');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>oSCtx=c.getContext('2d');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>oSCtx.strokeStyle='#1A1625';oSCtx.lineWidth=2;oSCtx.lineCap='round';oSCtx.lineJoin='round';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>function pos(e){const r=c.getBoundingClientRect(),s=e.touches?e.touches[0]:e;return{x:(s.clientX-r.left)*(c.width/r.width),y:(s.clientY-r.top)*(c.height/r.height)};}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>c.addEventListener('mousedown',function(e){oDrw=true;const p=pos(e);oSCtx.beginPath();oSCtx.moveTo(p.x,p.y);});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>c.addEventListener('mousemove',function(e){if(!oDrw)return;const p=pos(e);oSCtx.lineTo(p.x,p.y);oSCtx.stroke();});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>c.addEventListener('mouseup',function(){oDrw=false;oStr++;oEvS();});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>c.addEventListener('touchstart',function(e){e.preventDefault();oDrw=true;const p=pos(e);oSCtx.beginPath();oSCtx.moveTo(p.x,p.y);},{passive:false});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>c.addEventListener('touchmove',function(e){e.preventDefault();if(!oDrw)return;const p=pos(e);oSCtx.lineTo(p.x,p.y);oSCtx.stroke();},{passive:false});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>c.addEventListener('touchend',function(e){e.preventDefault();oDrw=false;oStr++;oEvS();},{passive:false});</p>
+<p class="p1">}</p>
+<p class="p1">function oEvS(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('osigh').textContent=oStr&gt;=3?'<span class="s1">✓</span> Firma registrada ('+oStr+' trazos)':oStr===0?'Firma en el recuadro':'Trazos: '+oStr;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>oEvF();</p>
+<p class="p1">}</p>
+<p class="p1">function oClrS(){if(!oSCtx)return;oSCtx.clearRect(0,0,560,110);oStr=0;document.getElementById('osigh').textContent='Firma en el recuadro de arriba';oEvF();}</p>
+<p class="p1">function oEvF(){document.getElementById('obn5').disabled=!(document.getElementById('ofck').checked&amp;&amp;oStr&gt;=3);}</p>
+<p class="p2"><br></p>
+<p class="p1">function oFin(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const id='C2M-P-'+Date.now().toString(36).toUpperCase().slice(-8);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>oCD.id=id;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('ocid').textContent=id;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('ocname').textContent=oCD.name;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('ocearn').textContent='$'+oCD.earn.toLocaleString()+' MXN';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>oGo(6);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('oplbl').textContent='¡Prenda registrada!';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('oppct').textContent='100%';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('opf').style.width='100%';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('osaving').textContent='Guardando en base de datos...';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>sbInsert('propietarios',{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>nombre:oCD.name,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>telefono:document.getElementById('oph').value.trim(),</p>
+<p class="p1"><span class="Apple-converted-space">    </span>correo:document.getElementById('oem').value.trim(),</p>
+<p class="p1"><span class="Apple-converted-space">    </span>instagram:document.getElementById('oig').value.trim()||null,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>tiktok:document.getElementById('otk').value.trim()||null,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>categoria:oCD.cat,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>valor_declarado:oCD.val,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>ganancia_estimada:oCD.earn,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>clabe:oClV,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>clabe_banco:document.getElementById('ochip').textContent,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>firma_hash:oCD.hash,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>contrato_id:oCD.id,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>timestamp_firma:oCD.ts,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>aceptacion_terminos:true,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>aceptacion_imagen:true,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>status:'pendiente_revision'</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}).then(function(ok){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('osaving').textContent=ok?'<span class="s2">✅</span> Registro guardado':'<span class="s2">⚠️</span> No se pudo guardar — intenta de nuevo';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* ── RENTER NAV ── */</p>
+<p class="p1">function rGo(n){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('rp'+rCur).classList.remove('on');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(rCur&lt;5){const t=document.getElementById('rt'+rCur);t.classList.remove('av','r');if(n&gt;rCur)t.classList.add('done');else t.classList.remove('done');}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>rCur=n;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('rp'+n).classList.add('on');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(n&lt;5){const t=document.getElementById('rt'+n);t.classList.remove('pend','done');t.classList.add('av','r');document.getElementById('rplbl').textContent=RSTEPS[n];document.getElementById('rppct').textContent=PCTS[n];document.getElementById('rpf').style.width=PCTS[n];}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(n===2){rInitStripe();}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(n===3){rInitSig();}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(n===4){rBuildSum();}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>window.scrollTo({top:0,behavior:'smooth'});</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* ── RENTER ID ── */</p>
+<p class="p1">function rVCURP(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const v=document.getElementById('rcurp').value.toUpperCase().trim();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('rcurp').value=v;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const ok=/^[A-Z]{4}[0-9]{6}[HM][A-Z]{5}[A-Z0-9][0-9]$/.test(v);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('rcst').innerHTML=ok?'&lt;span class="pill pill-ok"&gt;<span class="s1">✓</span> CURP válida&lt;/span&gt;':'&lt;span style="font-size:10.5px;color:#8B2020"&gt;Formato inválido — revisa los 18 caracteres&lt;/span&gt;';</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* ── RENTER TERMS ── */</p>
+<p class="p1">function rChkS(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(rTR)return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const el=document.getElementById('rtbox');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(el.scrollTop+el.clientHeight&gt;=el.scrollHeight-10){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>rTR=true;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('rtbdg').classList.add('ok');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('rttxt').textContent='Leído — ya puedes aceptar';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('rtf').style.opacity='0';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('rckw').classList.remove('lk');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1">}</p>
+<p class="p1">function rEvCk(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const ok=['rc1','rc2','rc3','rc4','rc5','rc6'].every(function(id){return document.getElementById(id).checked;});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('rbn1').disabled=!ok;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* ── RENTER PAYMENT (STRIPE REAL) ── */</p>
+<p class="p1">async function rInitStripe(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(stripeElems||rStripeLoading)return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const err=document.getElementById('rderr');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(typeof Stripe==='undefined'){err.textContent='No se pudo cargar Stripe.js — revisa tu conexión.';return;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(STRIPE_PK.indexOf('REEMPLAZA')&gt;-1||STRIPE_PK.indexOf('pk_')!==0){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>err.textContent='Falta configurar la llave publicable de Stripe (STRIPE_PK) en el código.';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>rStripeLoading=true;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>try{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if(!stripeJS)stripeJS=Stripe(STRIPE_PK,{locale:'es-419'});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const d=await edgeCall({</p>
+<p class="p1"><span class="Apple-converted-space">      </span>action:'create-setup-intent',</p>
+<p class="p1"><span class="Apple-converted-space">      </span>nombre:document.getElementById('rn').value.trim(),</p>
+<p class="p1"><span class="Apple-converted-space">      </span>correo:document.getElementById('rem').value.trim(),</p>
+<p class="p1"><span class="Apple-converted-space">      </span>telefono:document.getElementById('rtel').value.trim()</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>rCustId=d.customer_id;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>stripeElems=stripeJS.elements({</p>
+<p class="p1"><span class="Apple-converted-space">      </span>clientSecret:d.client_secret,</p>
+<p class="p1"><span class="Apple-converted-space">      </span>appearance:{</p>
+<p class="p1"><span class="Apple-converted-space">        </span>theme:'stripe',</p>
+<p class="p1"><span class="Apple-converted-space">        </span>variables:{</p>
+<p class="p1"><span class="Apple-converted-space">          </span>colorPrimary:'#2D7A5A',</p>
+<p class="p1"><span class="Apple-converted-space">          </span>colorText:'#1A1625',</p>
+<p class="p1"><span class="Apple-converted-space">          </span>colorDanger:'#8B2020',</p>
+<p class="p1"><span class="Apple-converted-space">          </span>fontFamily:'DM Sans, sans-serif',</p>
+<p class="p1"><span class="Apple-converted-space">          </span>borderRadius:'7px'</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const pe=stripeElems.create('payment');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('payment-element').innerHTML='';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>pe.mount('#payment-element');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>err.textContent='';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}catch(e){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>err.textContent='No se pudo cargar el formulario de pago: '+e.message;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('payment-element').innerHTML='&lt;p style="font-size:12px;color:var(--il)"&gt;Regresa e intenta de nuevo.&lt;/p&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}finally{rStripeLoading=false;}</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">async function rConfirmCard(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const err=document.getElementById('rderr');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const btn=document.getElementById('rpaybtn');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(!stripeJS||!stripeElems){err.textContent='El formulario de pago aún no está listo.';return;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>btn.disabled=true;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>btn.textContent='Verificando…';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>try{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const res=await stripeJS.confirmSetup({elements:stripeElems,redirect:'if_required'});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if(res.error)throw new Error(res.error.message);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const si=res.setupIntent;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>rPI=typeof si.payment_method==='string'?si.payment_method:si.payment_method.id;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const det=await edgeCall({action:'pm-details',payment_method:rPI});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>rBr=det.brand||'card';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>rL4=det.last4||'????';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('rdf').style.display='none';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('rcvr').style.display='flex';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const br={visa:'VISA',mastercard:'MC',amex:'AMEX'};</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('rbch').textContent=br[rBr]||String(rBr).toUpperCase().substring(0,5);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('rl4').textContent=rL4;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('rbn2').disabled=false;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>err.textContent='';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}catch(e){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>err.textContent=e.message||'No se pudo verificar la tarjeta';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}finally{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>btn.disabled=false;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>btn.innerHTML='&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/&gt;&lt;/svg&gt;Verificar y guardar tarjeta';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function rChC(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>rPI=null;rL4=null;rBr=null;rCustId=null;stripeElems=null;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('rcvr').style.display='none';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('rdf').style.display='block';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('payment-element').innerHTML='&lt;p style="font-size:12px;color:var(--il)"&gt;Cargando formulario seguro…&lt;/p&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('rbn2').disabled=true;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>rInitStripe();</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* ── RENTER SIGNATURE ── */</p>
+<p class="p1">function rInitSig(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const now=new Date();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>rTs=now.toLocaleString('es-MX',{timeZone:'America/Mexico_City',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit'});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('rtsv').textContent=rTs;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const ua=navigator.userAgent;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>let p='Navegador';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(/iPhone|iPad/.test(ua))p='iOS';else if(/Android/.test(ua))p='Android';else if(/Chrome/.test(ua))p='Chrome';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('ruav').textContent=p;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(!rSCtx){rInitSC();}</p>
+<p class="p1">}</p>
+<p class="p1">function rInitSC(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const c=document.getElementById('rsigc');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>rSCtx=c.getContext('2d');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>rSCtx.strokeStyle='#1A1625';rSCtx.lineWidth=2;rSCtx.lineCap='round';rSCtx.lineJoin='round';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>function pos(e){const r=c.getBoundingClientRect(),s=e.touches?e.touches[0]:e;return{x:(s.clientX-r.left)*(c.width/r.width),y:(s.clientY-r.top)*(c.height/r.height)};}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>c.addEventListener('mousedown',function(e){rDrw=true;const p=pos(e);rSCtx.beginPath();rSCtx.moveTo(p.x,p.y);});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>c.addEventListener('mousemove',function(e){if(!rDrw)return;const p=pos(e);rSCtx.lineTo(p.x,p.y);rSCtx.stroke();});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>c.addEventListener('mouseup',function(){rDrw=false;rStr++;rEvS();});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>c.addEventListener('touchstart',function(e){e.preventDefault();rDrw=true;const p=pos(e);rSCtx.beginPath();rSCtx.moveTo(p.x,p.y);},{passive:false});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>c.addEventListener('touchmove',function(e){e.preventDefault();if(!rDrw)return;const p=pos(e);rSCtx.lineTo(p.x,p.y);rSCtx.stroke();},{passive:false});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>c.addEventListener('touchend',function(e){e.preventDefault();rDrw=false;rStr++;rEvS();},{passive:false});</p>
+<p class="p1">}</p>
+<p class="p1">function rEvS(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('rsigh').textContent=rStr&gt;=3?'<span class="s1">✓</span> Firma registrada ('+rStr+' trazos)':rStr===0?'Firma en el recuadro':'Trazos: '+rStr;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('rbn3').disabled=rStr&lt;3;</p>
+<p class="p1">}</p>
+<p class="p1">function rClrS(){if(!rSCtx)return;rSCtx.clearRect(0,0,560,110);rStr=0;document.getElementById('rsigh').textContent='Firma en el recuadro de arriba';document.getElementById('rbn3').disabled=true;}</p>
+<p class="p2"><br></p>
+<p class="p1">/* ── RENTER SUMMARY ── */</p>
+<p class="p1">async function rBuildSum(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const n=document.getElementById('rn').value.trim()||'—';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const c=document.getElementById('rcurp').value.toUpperCase().trim()||'—';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const e=document.getElementById('rem').value.trim()||'—';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const t=document.getElementById('rtel').value.trim()||'—';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('rsn').textContent=n;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('rsc').textContent=c;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('rse').textContent=e;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('rst').textContent=t;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('rsts').textContent=rTs;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const bn={visa:'Visa',mastercard:'Mastercard',amex:'Amex',card:'Tarjeta'}[rBr]||'Tarjeta';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('rsp').innerHTML='&lt;span class="pill pill-ok"&gt;'+bn+' &amp;bull;&amp;bull;&amp;bull;&amp;bull; '+(rL4||'????')+'&lt;/span&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>rHash=await sha256(n+c+e+rTs+(rPI||''));</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('rsh').textContent=rHash;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>rCD={nombre:n,curp:c,ts:rTs,hash:rHash};</p>
+<p class="p1">}</p>
+<p class="p1">function rEvF(){document.getElementById('rbn4').disabled=!document.getElementById('rfck').checked;}</p>
+<p class="p2"><br></p>
+<p class="p1">function rFin(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const id='C2M-R-'+Date.now().toString(36).toUpperCase().slice(-8);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>rCD.id=id;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('rcid').textContent=id;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('rcname').textContent=rCD.nombre;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('rcts').textContent=rCD.ts;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>rGo(5);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('rplbl').textContent='¡Contrato firmado!';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('rppct').textContent='100%';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('rpf').style.width='100%';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('rsaving').textContent='Guardando en base de datos...';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>sbInsert('renteros',{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>nombre:rCD.nombre,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>curp:document.getElementById('rcurp').value.toUpperCase().trim(),</p>
+<p class="p1"><span class="Apple-converted-space">    </span>correo:document.getElementById('rem').value.trim(),</p>
+<p class="p1"><span class="Apple-converted-space">    </span>telefono:document.getElementById('rtel').value.trim(),</p>
+<p class="p1"><span class="Apple-converted-space">    </span>fecha_nacimiento:document.getElementById('rdob').value||null,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>tipo_id:document.getElementById('rtid').value||null,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>stripe_customer_id:rCustId,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>stripe_payment_method:rPI,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>card_brand:rBr,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>card_last4:rL4,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>firma_hash:rCD.hash,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>contrato_id:rCD.id,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>timestamp_firma:rCD.ts,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>clausulas_aceptadas:6,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>status:'activo'</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}).then(function(ok){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('rsaving').textContent=ok?'<span class="s2">✅</span> Registro guardado':'<span class="s2">⚠️</span> No se pudo guardar — intenta de nuevo';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1">}</p>
+<p class="p1">&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
 </body>
 </html>
